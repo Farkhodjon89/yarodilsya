@@ -1,16 +1,58 @@
+@import '~slick-carousel/slick/slick.css';
+@import '~slick-carousel/slick/slick-theme.css';
+
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    padding: 0;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+    color: inherit;
+    text-decoration: none;
 }
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
+
+.MuiContainer-root {
+    max-width: 1300px !important;
+}
+
+.MuiTextField-root {
+    width: 550px;
+    background: rgba(255, 255, 255, 0.2);
+    mix-blend-mode: normal;
+    border-radius: 8px;
+}
+
+
+.sliderNextArrow,
+.sliderPrevArrow {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    z-index: 1;
+    border-radius: 50%;
+    padding: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border: 1px solid #E8E8E8;
+    cursor: pointer;
+}
+
+.sliderNextArrow {
+    right: -20px;
+}
+
+.sliderPrevArrow {
+    left: -20px;
+}
+
