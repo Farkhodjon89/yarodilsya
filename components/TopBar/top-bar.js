@@ -6,7 +6,7 @@ const TopBar = () => {
       <Box sx={{
         height: 30,backgroundColor:'#EA56AE;',display: 'flex',justifyContent: 'center',alignItems: 'center'
       }}>
-        <Typography sx={{fontSize: 15,fontWeight: 400, color: '#fff'}}>Ликвидация! Скидки до 50%</Typography>
+        <Typography sx={{fontSize: 15,fontWeight: 400, lineHeight: '20px', color: '#fff'}}>Ликвидация! Скидки до 50%</Typography>
       </Box>
   );
 };

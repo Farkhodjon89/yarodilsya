@@ -1,5 +1,6 @@
 @import '~slick-carousel/slick/slick.css';
 @import '~slick-carousel/slick/slick-theme.css';
+@import "~react-image-gallery/styles/css/image-gallery.css";
 
 html,
 body {
@@ -26,7 +27,27 @@ a {
     width: 550px;
     background: rgba(255, 255, 255, 0.2);
     mix-blend-mode: normal;
-    border-radius: 8px;
+    border-radius: 10px;
+    outline: none !important;
+}
+
+
+.MuiAccordionSummary-content {
+    align-items: center;
+}
+
+.image-gallery-image {
+    border-radius: 8px !important;
+}
+
+.image-gallery-image img {
+    border-radius: 8px !important;
+}
+
+@media (max-width: 1100px) {
+    .MuiTextField-root {
+        width: 270px;
+    }
 }
 
 
@@ -48,11 +69,16 @@ a {
     cursor: pointer;
 }
 
-.sliderNextArrow {
-    right: -20px;
-}
-
 .sliderPrevArrow {
     left: -20px;
 }
+
+.sliderNextArrow {
+    right: -1px;
+}
+
+
+
+
+
 

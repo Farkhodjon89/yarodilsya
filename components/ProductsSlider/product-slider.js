@@ -4,6 +4,7 @@ import ProductItem from "../ProductItem/product-item";
 import Slider from 'react-slick';
 import ArrowLeft from "../../public/icons/arrowLeft";
 import ArrowRight from "../../public/icons/arrowRight";
+import SectionTitle from "../SectionTitle/section-title";
 
 const SliderPrevArrow = (props) => (
     <button
@@ -25,7 +26,7 @@ const ProductSlider = ({products, title}) => {
   const settings = {
     arrows: true,
     infinite: true,
-    slidesToShow: 6,
+    slidesToShow: title === 'Товар дня' ? 1 : 6,
     slidesToScroll: 1,
     prevArrow: <SliderPrevArrow/>,
     nextArrow: <SliderNextArrow/>,
@@ -34,7 +35,7 @@ const ProductSlider = ({products, title}) => {
         breakpoint: 770,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 2,
+          slidesToScroll: 1,
           infinite: true,
           dots: false,
         },
@@ -45,14 +46,18 @@ const ProductSlider = ({products, title}) => {
   let productList = []
 
   for (const product of products) {
-    productList.push(<ProductItem product={product}/>)
+    productList.push(<ProductItem title={title} product={product}/>)
   }
 
   return (
       <>
-        <Typography sx={{fontWeight: 600, fontSize: 25, color: 'text.primary',marginBottom: '25px'}}>{title}</Typography>
+        {title === 'Товар дня'
+            ? <Typography sx={{fontWeight: 600, fontSize: '16px', color: 'text.primary', textAlign: 'center'}}>
+              Товар дня
+            </Typography>
+            : <SectionTitle title={title}/>}
         <Slider {...settings}>
-            {productList}
+          {productList}
         </Slider>
       </>
 

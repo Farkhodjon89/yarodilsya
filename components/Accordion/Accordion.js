@@ -15,7 +15,6 @@ const Accordion = ({ title = '', children }) => {
       square
       sx={{
         boxShadow: 'none',
-        color: 'primary.main',
       }}
     >
       <AccordionSummary

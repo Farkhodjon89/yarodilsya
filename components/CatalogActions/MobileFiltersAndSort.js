@@ -11,9 +11,9 @@ import {
   FormControlLabel,
   FormControl,
 } from '@mui/material'
-import FilterIcon from 'public/icons/Filter'
-import SortIcon from 'public/icons/Sort'
-import Cross from 'public/icons/Cross'
+// import FilterIcon from 'public/icons/Filter'
+// import SortIcon from 'public/icons/Sort'
+// import Cross from 'public/icons/Cross'
 
 const MobileFiltersAndSort = ({
   filtersComponent,
@@ -25,7 +25,7 @@ const MobileFiltersAndSort = ({
   const items = [
     {
       name: 'Фильтры',
-      icon: <FilterIcon />,
+      // icon: <FilterIcon />,
       open: open.filter,
       close: (r) => setOpen({ filter: r, sort: false }),
       drawer: filtersComponent,
@@ -33,7 +33,7 @@ const MobileFiltersAndSort = ({
     },
     {
       name: 'Сортировка',
-      icon: <SortIcon />,
+      // icon: <SortIcon />,
       open: open.sort,
       close: (r) => setOpen({ filter: false, sort: r }),
       drawer: (
@@ -100,7 +100,7 @@ const MobileFiltersAndSort = ({
               path: { stroke: (theme) => theme.palette.primary.main },
             }}
           >
-            <Cross />
+            {/*<Cross />*/}
           </IconButton>
         </Box>
         {item.drawer}

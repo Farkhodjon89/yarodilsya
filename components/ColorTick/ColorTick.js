@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box } from '@mui/material'
-import Tick from 'public/icons/Tick'
+// import Tick from 'public/icons/Tick'
 
 const ColorTick = ({ color, active }) => {
   return (
@@ -15,7 +15,7 @@ const ColorTick = ({ color, active }) => {
         borderRadius: '50%',
       }}
     >
-      {active && <Tick />}
+      {/*{active && <Tick />}*/}
     </Box>
   )
 }

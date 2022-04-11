@@ -1,12 +1,12 @@
-import Accordion from 'components/Accordion'
+import Accordion from '../../Accordion/Accordion'
 import { Button, Grid } from '@mui/material'
-import addToArray from 'utilities/AddToArray'
+import addToArray from 'utility/AddToArray'
 
 const Sizes = ({ sizes = [], sizeTerms, setSizeTerms }) => {
   return (
     <Accordion title='Размер'>
       <Grid container spacing={1}>
-        {sizes.map((size) => (
+        {sizes?.map((size) => (
           <Grid item xs={6} key={size.databaseId}>
             <Button
               fullWidth
@@ -14,15 +14,11 @@ const Sizes = ({ sizes = [], sizeTerms, setSizeTerms }) => {
               sx={{
                 fontWeight: 'normal',
                 fontSize: 14,
+                color: 'text.primary',
                 '&:hover': {
-                  color: 'secondary.main',
+                  color: 'text.primary',
                 },
               }}
-              color={
-                sizeTerms.map((color) => color.slug).includes(size.slug)
-                  ? 'secondary'
-                  : 'primary'
-              }
               variant={
                 sizeTerms.map((color) => color.slug).includes(size.slug)
                   ? 'outlined'

@@ -4,16 +4,12 @@ import ArrowLeft from "../../public/icons/arrowLeft";
 import ArrowRight from "../../public/icons/arrowRight";
 import {Box} from "@mui/material";
 import Image from 'next/image';
+import ProductSlider from "../ProductsSlider/product-slider";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import NextLink from "next/link";
 
 const BaseSlider = ({sliderBanners, products}) => {
-  const [windowWidth, setWindowWidth] = useState()
-
-  let resizeWindow = () => setWindowWidth(window.innerWidth)
-  useEffect(() => {
-    resizeWindow()
-    window.addEventListener('resize', resizeWindow)
-    return () => window.removeEventListener('resize', resizeWindow)
-  }, [])
+  const matches = useMediaQuery('(max-width: 600px)');
 
   const SliderPrevArrow = (props) => (
       <button
@@ -44,17 +40,34 @@ const BaseSlider = ({sliderBanners, products}) => {
   }
 
   return (
-      <Box>
-        <Slider {...settings}>
-          {sliderBanners.map(({id, image, mobImage}) => {
-            return (
-                <Box key={id} sx={{display: 'block', borderRadius: '8px'}}>
-                  <Image src={windowWidth <= 770 ? mobImage : image} width={1050} height={388}/>
-                </Box>
-            )
-          })}
-        </Slider>
-        {/*<ProductSlider products={products}/>*/}
+      <Box sx={{
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'baseline;',
+        height: {xs: '170px', md: '430px'},
+        marginBottom: {xs: '20px', md: '35px'}
+      }}>
+        <Box sx={{width: {xs: '100%', md: '80%', borderRadius: '8px'}, maxWidth: '1050px'}}>
+          <Slider {...settings}>
+            {sliderBanners.map(({id, image, mobImage}) => {
+              return (
+                  <NextLink key={id} href="/catalog">
+                    <a>
+                      <Box sx={{display: 'block', borderRadius: '8px'}}>
+                        <Image alt="" src={matches ? mobImage : image} width={1050} height={395}/>
+                      </Box>
+                    </a>
+                  </NextLink>
+              )
+            })}
+          </Slider>
+        </Box>
+        <Box sx={{display: {xs: 'none', md: 'block'}, width: '20%', maxWidth: '200px'}}>
+          <ProductSlider title='Товар дня' products={products}/>
+        </Box>
+
+
       </Box>
 
   );

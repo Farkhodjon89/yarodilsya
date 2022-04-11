@@ -3,7 +3,7 @@ import { ADD, REMOVE, REMOVE_ALL, QUANTITY } from 'redux/types'
 export const cart = (state = [], { type, payload }) => {
   switch (type) {
     case ADD:
-      return [{ ...payload, selectedQuantity: 1 }, ...state]
+      return [{ ...payload, selectedQuantity: payload.quantity }, ...state]
     case REMOVE:
       return state.filter((item) => item.selectedId !== payload)
     case REMOVE_ALL:

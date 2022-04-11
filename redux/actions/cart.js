@@ -3,17 +3,15 @@ import { ADD, REMOVE, REMOVE_ALL, QUANTITY } from 'redux/types'
 export const addToCart = (
   product,
   selectedId,
-  selectedColor,
   selectedSize,
-  maxQuantity
+  quantity
 ) => ({
   type: ADD,
   payload: {
     ...product,
     selectedId,
-    selectedColor,
     selectedSize,
-    maxQuantity,
+    quantity,
   },
 })
 

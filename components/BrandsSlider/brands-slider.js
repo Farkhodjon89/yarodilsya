@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Slider from 'react-slick';
 import ArrowRight from "../../public/icons/arrowRight";
 import ArrowLeft from "../../public/icons/arrowLeft";
+import SectionTitle from "../SectionTitle/section-title";
 
 const BrandsSlider = ({brands,title}) => {
   const SliderPrevArrow = (props) => (
@@ -33,8 +34,8 @@ const BrandsSlider = ({brands,title}) => {
       {
         breakpoint: 770,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
+          slidesToShow: 4,
+          slidesToScroll: 1,
           infinite: true,
           dots: false,
         },
@@ -44,16 +45,27 @@ const BrandsSlider = ({brands,title}) => {
 
 
   return (
-      <Box>
-        <Typography sx={{fontWeight: 600, fontSize: '25px', color: 'text.primary',marginBottom: '25px'}}>{title}</Typography>
+      <Box sx={{marginBottom: {xs: '20px', md: '70px'}}}>
+        <SectionTitle title={title}/>
         <Slider {...settings}>
           {brands.map(({slug, image, id}) => {
             return (
-                <NextLink key={id} href={slug}>
-                  <a>
-                    <Image alt="" src={image} width={80} height={60}/>
-                  </a>
-                </NextLink>
+                <Box key={id} sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  border: '1px solid #E8E8E8;',
+                  width: '90px',
+                  height: '70px',
+                  borderRadius: '8px'
+
+                }}>
+                  <NextLink  href={slug}>
+                    <a>
+                      <Image alt="" src={image} width={80} height={60}/>
+                    </a>
+                  </NextLink>
+                </Box>
             )
           })}
         </Slider>

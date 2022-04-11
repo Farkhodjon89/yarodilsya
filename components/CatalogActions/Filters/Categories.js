@@ -1,23 +1,25 @@
-import Accordion from 'components/Accordion'
+import Accordion from '../../Accordion/Accordion'
 import { Button } from '@mui/material'
 import ArrowLeftIcon from 'public/icons/ArrowLeft'
 import { useRouter } from 'next/router'
 
 const styles = {
   fontWeight: 'normal',
-  fontSize: 14,
+  fontSize: 16,
   lineHeight: '17px',
   justifyContent: 'flex-start',
-  height: 45,
+  marginBottom: '10px',
+  color: '#999999',
+  textTransform: 'capitalize',
   ':hover': {
-    color: 'secondary.main',
+    color: 'text.primary',
   },
 }
 
 const Categories = ({ category }) => {
   const router = useRouter()
   return (
-    <Accordion title='Категории'>
+    <Accordion title='Подгатегории'>
       {category?.parent && (
         <Button
           onClick={() =>
@@ -30,7 +32,7 @@ const Categories = ({ category }) => {
           startIcon={<ArrowLeftIcon />}
           sx={styles}
         >
-          Назад к {category?.parent?.node?.name}
+          Назад {/*category?.parent?.node?.name*/}
         </Button>
       )}
       {category?.children?.nodes.map((category) => (

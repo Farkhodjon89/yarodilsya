@@ -1,0 +1,7 @@
+export const ADD = 'ADD'
+export const REMOVE = 'REMOVE'
+export const REMOVE_ALL = 'REMOVE_ALL'
+export const ADD_TO_WISHLIST = 'ADD_TO_WISHLIST'
+export const REMOVE_FROM_WISHLIST = 'REMOVE_FROM_WISHLIST'
+export const QUANTITY = 'QUANTITY'
+export const SUM = 'SUM'

@@ -5,7 +5,7 @@ import {Container} from "@mui/material";
 import Footer from "../Footer/footer";
 import TopBar from "../TopBar/top-bar";
 
-const Layout = ({children}) => {
+const Layout = ({children,categories}) => {
   return (
       <>
         <Head>
@@ -13,7 +13,7 @@ const Layout = ({children}) => {
           <meta name='description' content='YaRodilsya description here.'/>
         </Head>
         <TopBar />
-        <Header/>
+        <Header categories={categories}/>
         <Container>{children}</Container>
         <Footer/>
       </>
