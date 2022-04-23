@@ -143,7 +143,7 @@ const CartModal = ({product, cartModal, modal = 'modal', setCartModal}) => {
                 {product.onSale ? (
                     <Typography sx={{
                       fontWeight: '600',
-                      fontSize: {xs: '17px', md: '25px'},
+                      fontSize: {xs: '16px', md: '25px'},
                       color: 'text.primary'
                     }}>
                       {formatPrice(product.woocsSalePrice)}
