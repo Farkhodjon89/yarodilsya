@@ -28,7 +28,7 @@ const CatalogModal = ({open, setOpen, mainCategories}) => {
             <Box key={databaseId} sx={{display: 'flex', width: '100%',}}
                  onClick={e => e.stopPropagation()}>
               <Box sx={{
-                fontWeight: 400,
+                fontWeight: 600,
                 fontSize: '15px',
                 color: 'text.primary',
                 flexDirection: 'column',
@@ -95,7 +95,8 @@ const CatalogModal = ({open, setOpen, mainCategories}) => {
                                        cursor: 'pointer',
                                        fontWeight: 400,
                                        fontSize: '15px',
-                                       color: 'grey.main'
+                                       color: 'grey.main',
+                                       ":hover": {color: 'text.primary'}
                                      }}>
                                 <NextLink href={`/catalog/${slug}`}>
                                   <a>

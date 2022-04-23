@@ -43,7 +43,7 @@ const ProductCard = ({product}) => {
         {
           databaseId: product.databaseId,
           stockQuantity: product.stockQuantity,
-          size: product?.size?.nodes[0]?.options[0],
+          size: product?.size?.nodes[0]?.options,
         },
       ]
 
@@ -166,7 +166,7 @@ const ProductCard = ({product}) => {
               })}
             </Grid>
             <Stack direction="row" spacing={2} sx={{margin: '20px 0', alignItems: 'center'}}>
-              <QuantityCount quantity={quantity} setQuantity={setQuantity}/>
+              <QuantityCount product={product} quantity={quantity} setQuantity={setQuantity}/>
               <Button
                   variant="contained"
                   color={!alreadyAddedToCart ? 'primary' : 'secondary'}

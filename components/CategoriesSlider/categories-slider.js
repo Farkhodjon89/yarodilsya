@@ -27,7 +27,7 @@ const CategoriesSlider = ({categories}) => {
   const settings = {
     arrows: true,
     infinite: true,
-    slidesToShow: 6,
+    slidesToShow: 5,
     slidesToScroll: 1,
     prevArrow: <SliderPrevArrow/>,
     nextArrow: <SliderNextArrow/>,
@@ -50,22 +50,23 @@ const CategoriesSlider = ({categories}) => {
         borderBottom: '2px solid rgba(221, 221, 221, 0.5);',
         fontSize: {xs: '13px', md: '16px'},
         fontWeight: {xs: '600', md: '400'},
-        margin: '25px 0',
-        textTransform: 'uppercase'
+        margin: '15px 0',
+        textTransform: 'uppercase',
+        padding: '14px 0'
       }}>
         <Slider {...settings}>
           {categories.map(({id, name, slug}) => (
               <NextLink href={`/catalog/${slug}`} key={id}>
                 <a onClick={() => setActive(true)}>
-                  {name}
+                  <Box sx={{":hover": {color: 'primary.main'}}}>
+                    {name}
+                  </Box>
                 </a>
               </NextLink>
           ))}
         </Slider>
       </Box>
-
-
-  );
+  )
 };
 
 export default CategoriesSlider;

@@ -23,7 +23,6 @@ const Header = ({categories}) => {
   const matches = useMediaQuery('(max-width: 900px)');
   const [searchQuery, setSearchQuery] = useState('')
 
-
   const cart = useSelector(state => state.cart)
 
   useEffect(() => {
@@ -101,16 +100,18 @@ const Header = ({categories}) => {
               <Button variant='contained'
                       sx={{
                         backgroundColor: 'btn.main',
-                        minWidth: {xs: '25px', md: '162px'},
+                        minWidth: {xs: '35px', md: '162px'},
                         display: 'flex',
+                        padding: {xs: '0',md: 'unset'},
                         justifyContent: 'center',
                         alignItems: 'center',
-                        minHeight: {xs: '35px', md: '58px'},
+                        minHeight: {xs: '35px', md: '55px'},
                         borderRadius: '8px',
                         boxShadow: 'none',
                         marginLeft: {xs: '0', md: '15px'},
                         '&:hover': {
-                          backgroundColor: 'btn.main',
+                          backgroundColor: '#0C2A86 ',
+                          boxShadow: 'none'
                         }
                       }}
                       onClick={() => setOpen(prev => !prev)}
@@ -149,7 +150,7 @@ const Header = ({categories}) => {
               </NextLink>
               <NextLink href='/wishlist'>
                 <a>
-                  <IconButton sx={{marginLeft: '10px'}}>
+                  <IconButton sx={{marginLeft: '10px', boxShadow: 'none'}}>
                     <Wishlist/>
                   </IconButton>
                 </a>

@@ -2,15 +2,12 @@ import React, {useState} from 'react';
 import {Box, Button} from "@mui/material";
 import ArrowLeftSmall from "../../public/icons/arrowLeftSmall";
 import ArrowRightSmall from "../../public/icons/arrowRightSmall";
+import {useDispatch} from "react-redux";
+import {quantityToCart} from 'redux/actions/cart'
 
-const QuantityCount = ({quantity, setQuantity}) => {
+const QuantityCount = ({quantity, setQuantity, product}) => {
 
-  const decreaseQuantity = () => {
-    setQuantity(quantity - 1)
-  }
-  const increaseQuantity = () => {
-    setQuantity(quantity + 1)
-  }
+  const dispatch = useDispatch()
 
   return (
       <Box>
@@ -24,7 +21,7 @@ const QuantityCount = ({quantity, setQuantity}) => {
             background: 'rgba(73, 214, 163, 0.1);'
           }
         }}
-                onClick={() => decreaseQuantity()}>
+                onClick={() => dispatch(quantityToCart(product.databaseId, quantity))}>
           <ArrowLeftSmall/>
         </Button>
         <input style={{width: '15px', border: '0', outline: 'none', padding: '0', textAlign: 'center'}}
@@ -40,13 +37,13 @@ const QuantityCount = ({quantity, setQuantity}) => {
           }
         }
         }
-        onClick={() => increaseQuantity()}>
-        <ArrowRightSmall/>
-      </Button>
+                onClick={() => dispatch(quantityToCart(product.databaseId, quantity))}>
+          <ArrowRightSmall/>
+        </Button>
 
-</Box>
-)
-  ;
+      </Box>
+  )
+      ;
 };
 
 export default QuantityCount;

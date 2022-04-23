@@ -147,11 +147,11 @@ const Footer = () => {
                     display: 'flex',
                     fontWeight: 400,
                     fontSize: '14px',
-                    color: 'rgba(255, 255, 255, 0.8)'
+                    color: 'rgba(255, 255, 255, 0.8)',
                   }}>
                     {child.map(({id, name, slug}) => (
                         <NextLink href={slug} key={id}>
-                          <a style={{marginBottom: '10px'}}>
+                          <a style={{marginBottom: '10px'}} >
                             {name}
                           </a>
                         </NextLink>
@@ -234,7 +234,7 @@ const Footer = () => {
           display: 'flex',
           flexDirection: {xs: 'column', md: 'row'},
           alignItems: 'center',
-          padding: '20px',
+          padding: '5px',
           position: 'relative'
         }}>
           <Box sx={{display: 'flex'}}>

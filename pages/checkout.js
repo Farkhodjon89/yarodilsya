@@ -25,7 +25,6 @@ export default function Checkout({categories}) {
         <CheckoutMain />
       </Layout>
   )
-
 }
 
 export async function getStaticProps() {

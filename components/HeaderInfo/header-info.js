@@ -13,7 +13,10 @@ const HeaderInfo = () => {
         top: '-65%',
         fontWeight: 400,
         fontSize: '13px',
-        color: 'rgba(255, 255, 255, 0.8)'
+        color: 'rgba(255, 255, 255, 0.8)',
+        "&:hover": {
+          color: 'white'
+        }
       }}>
         <NextLink href='/'>
           <a style={{marginRight: '25px'}}>
@@ -34,7 +37,7 @@ const HeaderInfo = () => {
         <NextLink href='tel:+998 93 378 10 55'>
           <a style={{display: 'flex', color: 'white', alignItems: 'center'}}>
             <Phone/>
-            <Typography sx={{marginLeft: '6px'}}>+998 93 378 10 55</Typography>
+            <Typography sx={{marginLeft: '6px',fontSize: '13px'}}>+998 93 378 10 55</Typography>
           </a>
         </NextLink>
       </Box>
