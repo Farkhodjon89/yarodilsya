@@ -1,8 +1,7 @@
-import {gql} from "@apollo/client";
-
+import { gql } from '@apollo/client'
 
 export const PRODUCT = gql`
-query MyQuery($id: ID!) {
+  query MyQuery($id: ID!) {
     product(id: $id, idType: SLUG) {
       databaseId
       slug
@@ -29,11 +28,6 @@ query MyQuery($id: ID!) {
         woocsRegularPrice
         woocsSalePrice
         stockQuantity
-        size: attributes(where: { taxonomy: "pa_size" }) {
-          nodes {
-            options
-          }
-        }
       }
       ... on VariableProduct {
         woocsRegularPrice
@@ -42,11 +36,6 @@ query MyQuery($id: ID!) {
           nodes {
             stockQuantity
             databaseId
-            size: attributes(where: { taxonomy: "pa_size" }) {
-              nodes {
-                value
-              }
-            }
           }
         }
       }
@@ -62,18 +51,13 @@ query MyQuery($id: ID!) {
           ... on SimpleProduct {
             woocsRegularPrice
             woocsSalePrice
-            
           }
           ... on VariableProduct {
             woocsRegularPrice
             woocsSalePrice
             variations(where: { stockStatus: IN_STOCK }) {
               nodes {
-                size: attributes(where: { taxonomy: "pa_size" }) {
-                  nodes {
-                    value
-                  }
-                }
+                name
               }
             }
           }

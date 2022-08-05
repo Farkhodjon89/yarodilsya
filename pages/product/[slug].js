@@ -1,13 +1,12 @@
-import React from 'react';
-import Layout from "../../components/Layout/layout";
-import Breadcrumb from "../../components/Breadcrumbs/breadcrumbs";
-import ProductCard from "../../components/ProductCard/product-card";
-import {client} from "../../apollo-client";
-import {PRODUCT} from "../../GRAPHQL/product";
-import {CATEGORIES} from "../../GRAPHQL/categories";
+import React from 'react'
+import Layout from '../../components/Layout/layout'
+import Breadcrumb from '../../components/Breadcrumbs/breadcrumbs'
+import ProductCard from '../../components/ProductCard/product-card'
+import { client } from '../../apollo-client'
+import { PRODUCT } from '../../GRAPHQL/product'
+import { CATEGORIES } from '../../GRAPHQL/categories'
 
-export default function Product({product, categories}) {
-
+export default function Product({ product, categories }) {
   const breadcrumbs = [
     {
       name: 'Главная',
@@ -20,30 +19,27 @@ export default function Product({product, categories}) {
   ]
 
   return (
-      <Layout categories={categories}>
-        <Breadcrumb breadcrumbs={breadcrumbs}/>
-        <ProductCard product={product}/>
-      </Layout>
-  );
-};
+    <Layout categories={categories}>
+      <Breadcrumb breadcrumbs={breadcrumbs} />
+      <ProductCard product={product} />
+    </Layout>
+  )
+}
 
-
-export async function getServerSideProps({params}) {
-
+export async function getServerSideProps({ params }) {
   const categories = await client.query({
-    query: CATEGORIES
+    query: CATEGORIES,
   })
 
   const product = await client.query({
     query: PRODUCT,
-    variables: {id: params.slug},
+    variables: { id: params.slug },
   })
 
   return {
     props: {
       product: product?.data?.product,
       categories: categories?.data?.productCategories?.nodes,
-    }
+    },
   }
 }
-
