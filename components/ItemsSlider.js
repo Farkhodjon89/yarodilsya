@@ -4,7 +4,6 @@ import { Box, useMediaQuery } from '@mui/material'
 import SliderArrow from 'public/icons/SliderArrow'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import 'react-image-gallery/styles/css/image-gallery.css'
 
 const SliderPrevArrow = (props) => (
   <Box

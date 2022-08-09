@@ -1,13 +1,17 @@
 import { Box } from '@mui/material'
 import QuantityArrow from 'public/icons/QuantityArrow'
+import { useDispatch } from 'react-redux'
+import { quantityToCart } from 'redux/actions/cart'
 
-const NewSetQuantity = ({ ml }) => {
+const NewSetQuantity = ({ quantity, setQuantity, max, id, ml, mr }) => {
+  const dispatch = useDispatch()
   return (
     <Box
       display='flex'
       alignItems='center'
       justifyContent='space-between'
       ml={ml}
+      mr={mr}
     >
       <Box
         sx={{
@@ -16,10 +20,16 @@ const NewSetQuantity = ({ ml }) => {
           justifyContent: 'center',
           cursor: 'pointer',
         }}
+        onClick={() => {
+          if (quantity !== 1) {
+            setQuantity(--quantity)
+            dispatch(quantityToCart(id, quantity))
+          }
+        }}
       >
         <QuantityArrow />
       </Box>
-      <Box mx={0.5}>1</Box>
+      <Box mx={0.5}>{quantity}</Box>
       <Box
         sx={{
           display: 'flex',
@@ -29,6 +39,12 @@ const NewSetQuantity = ({ ml }) => {
           svg: {
             transform: 'rotate(180deg)',
           },
+        }}
+        onClick={() => {
+          if (quantity !== max) {
+            setQuantity(++quantity)
+            dispatch(quantityToCart(id, quantity))
+          }
         }}
       >
         <QuantityArrow />

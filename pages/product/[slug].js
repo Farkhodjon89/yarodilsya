@@ -1,10 +1,9 @@
-import React from 'react'
-import Layout from '../../components/Layout/layout'
-import Breadcrumb from '../../components/Breadcrumbs/breadcrumbs'
-import ProductCard from '../../components/ProductCard/product-card'
-import { client } from '../../apollo-client'
-import { PRODUCT } from '../../graphql/product'
-import { CATEGORIES } from '../../graphql/categories'
+import Layout from 'components/Layout/layout'
+import Breadcrumb from 'components/Breadcrumbs/breadcrumbs'
+import ProductCard from 'components/ProductCard/product-card'
+import { client } from 'apollo-client'
+import { PRODUCT } from 'graphql/product'
+import { CATEGORIES } from 'graphql/categories'
 
 export default function Product({ product, categories }) {
   const breadcrumbs = [

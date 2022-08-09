@@ -4,7 +4,7 @@ import ArrowRightSmall from '../../public/icons/arrowRightSmall'
 import Link from 'components/Link'
 
 const CatalogModal = ({ open, setOpen, mainCategories }) => {
-  const [active, setActive] = useState('Детская комната')
+  const [active, setActive] = useState('Для мамы')
 
   return (
     <Box

@@ -1,18 +1,11 @@
-import {
-  ADD,
-  REMOVE,
-  REMOVE_ALL,
-  QUANTITY,
-  DECREASE_QUANTITY,
-} from 'redux/types'
+import { ADD, REMOVE, REMOVE_ALL, QUANTITY } from 'redux/types'
 
-export const addToCart = (product, selectedId, selectedSize, quantity) => ({
+export const addToCart = (product, selectedId, selectedQuantity) => ({
   type: ADD,
   payload: {
     ...product,
     selectedId,
-    selectedSize,
-    quantity,
+    selectedQuantity,
   },
 })
 

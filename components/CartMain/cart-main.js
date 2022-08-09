@@ -1,26 +1,14 @@
-import React, { useState } from 'react'
-import {
-  Accordion,
-  Box,
-  Button,
-  Grid,
-  IconButton,
-  Stack,
-  Typography,
-  useMediaQuery,
-} from '@mui/material'
-import QuantityCount from '../QuantityCount/quantity-count'
+import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material'
 import Image from 'next/image'
-import formatPrice from '../../utility/formatPrice'
-import Garbage from '../../public/icons/Garbage'
+import { formatPrice } from 'utility/formatPrice'
+import Garbage from 'public/icons/Garbage'
 import OrderDetails from '../OrderDetails/order-details'
-import AccordionPromoCode from '../AccordionPromoCode/accordion-promo-code'
-import NextLink from 'next/link'
 import { useDispatch } from 'react-redux'
+import { useRouter } from 'next/router'
 
 const CartMain = ({ products = [], remove }) => {
+  const { push } = useRouter()
   const matches = useMediaQuery('(max-width: 600px)')
-  const [quantity, setQuantity] = useState(1)
   const dispatch = useDispatch()
   const productsInfo = [
     {
@@ -112,7 +100,17 @@ const CartMain = ({ products = [], remove }) => {
               ))}
         </Grid>
         {products.map(
-          ({ id, image, name, databaseId, woocsRegularPrice, size }, index) => (
+          ({
+            id,
+            image,
+            name,
+            databaseId,
+            woocsRegularPrice,
+            woocsSalePrice,
+            onSale,
+            size,
+            selectedQuantity,
+          }) => (
             <Grid sx={{ cursor: 'pointer' }} key={id} container spacing={0}>
               <Grid item xs={4} md={2}>
                 <Box>
@@ -124,14 +122,6 @@ const CartMain = ({ products = [], remove }) => {
                       height={110}
                     />
                   </Box>
-                  {matches ? (
-                    <QuantityCount
-                      quantity={quantity}
-                      setQuantity={setQuantity}
-                    />
-                  ) : (
-                    ''
-                  )}
                 </Box>
               </Grid>
               <Grid item xs={4} md={2}>
@@ -155,7 +145,7 @@ const CartMain = ({ products = [], remove }) => {
                         color: 'grey.main',
                       }}
                     >
-                      Цвет:
+                      Кол-во:
                     </Typography>
                     <Typography
                       sx={{
@@ -165,29 +155,7 @@ const CartMain = ({ products = [], remove }) => {
                         color: 'text.primary',
                       }}
                     >
-                      Красный
-                    </Typography>
-                  </Box>
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Typography
-                      sx={{
-                        fontWeight: 400,
-                        display: { xs: 'block', md: 'none' },
-                        fontSize: { xs: '12px', md: '16px' },
-                        color: 'grey.main',
-                      }}
-                    >
-                      РАЗМЕР:
-                    </Typography>
-                    <Typography
-                      sx={{
-                        display: { xs: 'block', md: 'none' },
-                        fontWeight: 400,
-                        fontSize: '11px',
-                        color: 'text.primary',
-                      }}
-                    >
-                      9-12 мес
+                      {selectedQuantity}
                     </Typography>
                   </Box>
                   <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -209,7 +177,10 @@ const CartMain = ({ products = [], remove }) => {
                         color: 'text.primary',
                       }}
                     >
-                      200 215 сум
+                      {formatPrice(
+                        (onSale ? woocsSalePrice : woocsRegularPrice) *
+                          selectedQuantity
+                      )}
                     </Typography>
                   </Box>
                 </Box>
@@ -238,18 +209,13 @@ const CartMain = ({ products = [], remove }) => {
                       color: 'grey.main',
                     }}
                   >
-                    {formatPrice(woocsRegularPrice)}
+                    {formatPrice(onSale ? woocsSalePrice : woocsRegularPrice)}
                   </Typography>
                 </Box>
               </Grid>
               <Grid item xs={2} sx={{ display: { xs: 'none', md: 'block' } }}>
                 <Box>
-                  <Box sx={{ padding: '10px 0' }}>
-                    <QuantityCount
-                      quantity={quantity}
-                      setQuantity={setQuantity}
-                    />
-                  </Box>
+                  <Box sx={{ padding: '10px 0' }}>{selectedQuantity}</Box>
                 </Box>
               </Grid>
               <Grid item xs={2} sx={{ display: { xs: 'none', md: 'block' } }}>
@@ -263,7 +229,10 @@ const CartMain = ({ products = [], remove }) => {
                         color: 'text.primary',
                       }}
                     >
-                      {formatPrice(woocsRegularPrice)}
+                      {formatPrice(
+                        (onSale ? woocsSalePrice : woocsRegularPrice) *
+                          selectedQuantity
+                      )}
                     </Typography>
                   </Box>
                   <Box
@@ -287,23 +256,18 @@ const CartMain = ({ products = [], remove }) => {
           {/* <AccordionPromoCode /> */}
           <OrderDetails />
         </Box>
-        <Box sx={{ textAlign: 'center', marginTop: '20px' }}>
-          <NextLink href='/checkout'>
-            <a>
-              <Button
-                variant='contained'
-                sx={{
-                  fontSize: { xs: '13px', md: '18px' },
-                  width: '300px',
-                  height: '50px',
-                  borderRadius: '8px',
-                }}
-              >
-                ОФОРМИТЬ ЗАКАЗ
-              </Button>
-            </a>
-          </NextLink>
-        </Box>
+        <Button
+          fullWidth
+          variant='contained'
+          onClick={() => push('/checkout')}
+          sx={{
+            py: 1.5,
+            px: 3.5,
+            mt: 2,
+          }}
+        >
+          ОФОРМИТЬ ЗАКАЗ
+        </Button>
       </Box>
     </Box>
   )

@@ -20,9 +20,9 @@ const createNoopStorage = () => {
 }
 
 const storage =
-    typeof window !== 'undefined'
-        ? createWebStorage('local')
-        : createNoopStorage()
+  typeof window !== 'undefined'
+    ? createWebStorage('local')
+    : createNoopStorage()
 
 let store
 
@@ -35,9 +35,9 @@ const persistedReducer = persistReducer(persistConfig, reducer)
 
 function makeStore(initialState) {
   return createStore(
-      persistedReducer,
-      initialState,
-      composeWithDevTools(applyMiddleware())
+    persistedReducer,
+    initialState,
+    composeWithDevTools(applyMiddleware())
   )
 }
 
@@ -62,4 +62,3 @@ export function useStore(initialState) {
   const store = useMemo(() => initializeStore(initialState), [initialState])
   return store
 }
-

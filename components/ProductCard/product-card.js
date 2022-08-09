@@ -1,52 +1,25 @@
-import React, { useState } from 'react'
-import { Box, Button, Grid, IconButton, Stack, Typography } from '@mui/material'
+import { useEffect, useState } from 'react'
+import { Box, Button, Grid, Stack, Typography } from '@mui/material'
 import ReactImageGallery from 'react-image-gallery'
 import SectionTitle from '../SectionTitle/section-title'
-import formatPrice from '../../utility/formatPrice'
-import QuantityCount from '../QuantityCount/quantity-count'
-import Heart from '../../public/icons/Heart'
-import { useSelector, useDispatch } from 'react-redux'
+import { formatPrice } from 'utility/formatPrice'
+import { useDispatch, useSelector } from 'react-redux'
 import ProductCardAccordion from '../ProductCardAccordion/product-card-accordion'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import { addToCart, removeFromCart } from '../../redux/actions/cart'
-import ProductItem from '../ProductItem/product-item'
-import SimilarProducts from '../SimilarProducts/similar-products'
-import { purchaseAmount } from 'redux/actions/purchaseAmount'
+import NewProductsList from 'components/NewProductsList'
+import NewSetQuantity from 'components/NewSetQuantity'
+import 'react-image-gallery/styles/css/image-gallery.css'
+import { addToCart, removeFromCart } from 'redux/actions/cart'
 
 const ProductCard = ({ product }) => {
-  const [cartModal, setCartModal] = useState(false)
-  const [addedToWishlist, addToWishlist] = useState(false)
-  const [open, setOpen] = useState(false)
-  const [quantity, setQuantity] = useState(1)
-  const [selectedSize, setSelectedSize] = useState('')
-  const [maxQuantity, setMaxQuantity] = useState(1)
-  const [selectedId, setSelectedId] = useState(0)
-
-  const matches = useMediaQuery('(max-width: 600px)')
   const dispatch = useDispatch()
+  const mobile = useMediaQuery((theme) => theme.breakpoints.down('lg'))
   const cart = useSelector((state) => state.cart)
-  const wishlist = useSelector((state) => state.wishlist)
+  const [quantity, setQuantity] = useState(1)
 
   const alreadyAddedToCart = !!cart.find(
-    (item) => item.selectedId === selectedId
+    (item) => item.selectedId === product.databaseId
   )
-  const alreadyAddedToWishlist = !!wishlist.find(
-    (item) => item.databaseId === selectedId
-  )
-
-  const sizes = product?.variations
-    ? product.variations?.nodes?.map((variation) => ({
-        databaseId: variation.databaseId,
-        stockQuantity: variation.stockQuantity,
-        size: variation.size?.nodes[0]?.value,
-      }))
-    : [
-        {
-          databaseId: product.databaseId,
-          stockQuantity: product.stockQuantity,
-          size: product?.size?.nodes[0]?.options,
-        },
-      ]
 
   const images = [
     {
@@ -59,28 +32,39 @@ const ProductCard = ({ product }) => {
     })),
   ]
 
+  const quantityInCart = cart.find(
+    (item) => item.selectedId === product.databaseId
+  )?.selectedQuantity
+
+  useEffect(() => {
+    if (quantityInCart) {
+      setQuantity(quantityInCart)
+    }
+  }, [quantityInCart])
+
   return (
     <Box>
       <SectionTitle title={product.name} />
       <Box
         sx={{
           display: 'flex',
-          flexDirection: { xs: 'column', md: 'row' },
-          marginBottom: { xs: '15px', md: '90px' },
+          flexDirection: { xs: 'column', lg: 'row' },
+          marginBottom: { xs: '15px', lg: '90px' },
         }}
       >
         <Box
           sx={{
-            width: { xs: '100%', marginRight: '20px', md: '45%' },
-            mb: { xs: 2, md: 0 },
+            width: { xs: '100%', lg: '45%' },
+            mr: { xs: 0, lg: 3 },
+            mb: { xs: 2, lg: 0 },
             '.image-gallery-slide .image-gallery-image': {
               objectFit: 'cover !important',
-              minHeight: { xs: '340px !important', md: '580px !important' },
-              height: { xs: '340px !important', md: '580px !important' },
-              maxHeight: { xs: '340px !important', md: '580px !important' },
+              minHeight: { xs: '340px !important', lg: '580px !important' },
+              height: { xs: '340px !important', lg: '580px !important' },
+              maxHeight: { xs: '340px !important', lg: '580px !important' },
             },
             '.image-gallery-thumbnail': {
-              width: { md: '90px' },
+              width: { lg: '90px' },
               borderRadius: '8px',
             },
             '.image-gallery-thumbnail ': {
@@ -108,7 +92,7 @@ const ProductCard = ({ product }) => {
           <ReactImageGallery
             items={images}
             thumbnailPosition='left'
-            showThumbnails={!matches}
+            showThumbnails={!mobile}
             showBullets={false}
             showPlayButton={false}
             showFullscreenButton={false}
@@ -117,144 +101,89 @@ const ProductCard = ({ product }) => {
         </Box>
         <Box
           sx={{
-            width: { xs: '100%', md: '40%' },
+            width: { xs: '100%', lg: '40%' },
           }}
         >
-          {product.onSale ? (
-            <Typography
-              sx={{
-                fontWeight: '600',
-                fontSize: { xs: '17px', md: '25px' },
-                color: 'text.primary',
-              }}
-            >
-              {formatPrice(product.woocsSalePrice)}
-            </Typography>
-          ) : (
-            <Typography sx={{ fontWeight: 600, fontSize: '25px' }}>
-              {formatPrice(product.woocsRegularPrice)}
-            </Typography>
-          )}
+          <Box
+            sx={{
+              fontSize: { xs: 15, lg: 19 },
+              lineHeight: { xs: '20px', lg: '26px' },
+              fontWeight: 600,
+              color: 'text.primary',
+              mt: 'auto',
+              mb: 1,
+            }}
+          >
+            {product?.onSale && (
+              <Box
+                sx={{
+                  fontSize: { xs: 15, lg: 16 },
+                  lineHeight: { xs: '20px', lg: '22px' },
+                  textDecoration: 'line-through',
+                  textDecorationColor: 'red',
+                  color: '#606060',
+                  fontWeight: 400,
+                }}
+              >
+                {formatPrice(product?.woocsRegularPrice)}
+              </Box>
+            )}
+            {formatPrice(
+              product?.onSale
+                ? product?.woocsSalePrice
+                : product?.woocsRegularPrice
+            )}
+          </Box>
           <Typography
             sx={{
               color: 'grey.main',
               fontSize: '15px',
               fontWeight: '400',
-              marginBottom: '30px',
+              pb: 2,
+              borderBottom: '1px solid #E8E8E8',
             }}
           >
             Артикул: {product.sku}
           </Typography>
-          <Grid container spacing={1}>
-            {sizes.map(({ databaseId, stockQuantity, size }) => {
-              const currentSize = selectedSize === size
-              return (
-                <Grid item xs={3} key={databaseId}>
-                  <Button
-                    sx={{
-                      fontWeight: 'normal',
-                      fontSize: 16,
-                      padding: '6px 12px',
-                      color: 'grey.main',
-                    }}
-                    color={currentSize ? 'secondary' : 'primary'}
-                    variant={currentSize ? 'contained' : 'text'}
-                    onClick={() => {
-                      setSelectedId(databaseId)
-                      setSelectedSize(size)
-                      setMaxQuantity(stockQuantity)
-                    }}
-                  >
-                    {size}
-                  </Button>
-                </Grid>
-              )
-            })}
-          </Grid>
-          <Stack
-            direction='row'
-            spacing={2}
-            sx={{ margin: '20px 0', alignItems: 'center' }}
-          >
-            {/* <QuantityCount
-              product={product}
+          <Box display='flex' alignItems='center' my={2.5}>
+            <NewSetQuantity
               quantity={quantity}
               setQuantity={setQuantity}
-            /> */}
+              max={product?.stockQuantity}
+              id={product?.databaseId}
+              mr={{ xs: 1, lg: 1.5 }}
+            />
             <Button
               fullWidth
-              variant='contained'
-              color={!alreadyAddedToCart ? 'primary' : 'secondary'}
-              sx={{
-                height: '45px',
-                borderRadius: '8px',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                boxShadow: 'none',
-                color: 'white.main',
-              }}
+              color={alreadyAddedToCart ? 'secondary' : 'primary'}
               onClick={
                 alreadyAddedToCart
-                  ? () => dispatch(removeFromCart(selectedId))
-                  : () => {
+                  ? () => dispatch(removeFromCart(product?.databaseId))
+                  : () =>
                       dispatch(
-                        addToCart(product, selectedId, selectedSize, quantity)
+                        addToCart(product, product?.databaseId, quantity)
                       )
-                      dispatch(purchaseAmount(cart))
-                      setCartModal(true)
-                    }
               }
+              sx={{
+                color: 'common.white',
+                py: 1.5,
+                px: 3.5,
+              }}
             >
-              {alreadyAddedToCart ? 'В корзине' : 'Добавить в корзину'}
+              {alreadyAddedToCart ? 'В КОРЗИНЕ' : 'ДОБАВИТЬ В КОРЗИНУ'}
             </Button>
-            <IconButton
-              aria-label='wishlist'
-              onClick={() => addToWishlist((prev) => !prev)}
-            >
-              <Heart />
-            </IconButton>
-          </Stack>
+          </Box>
           <ProductCardAccordion />
-          {/*<CartModal />*/}
         </Box>
       </Box>
       <Grid container spacing={3} sx={{ marginBottom: '90px' }}>
-        <Grid item sx={12} md={6}>
-          <Box sx={{ marginBottom: '40px' }}>
-            <SectionTitle title='Описание' />
-            <Typography
-              sx={{
-                fontWeight: 400,
-                fontSize: '16px',
-                color: 'grey.main',
-                display: !open ? 'webkitBox' : '',
-                '-webkitBoxOrient': !open ? 'vertical' : '',
-                '-webkitLineClamp': !open ? '3' : '',
-                textOverflow: 'ellipsis',
-                overflow: !open ? 'hidden' : '',
-              }}
-            >
-              Женственные балетки базовых цветов подойдут почти под все элементы
-              гардероба. Балетки хорошо сочетаются с джинсами для создания более
-              повседневного стиля, так и с юбками и брюками для более
-              официальных мероприятий. При разработке модели использовалась
-              уникальная технология, которая способствует улучшенному
-              воздухообмену. Балетки дышат, поэтому ноги не потеют даже в жаркие
-              сезоны. Внут...
-            </Typography>
-            <Typography
-              sx={{
-                fontWeight: 600,
-                fontSize: '15px',
-                color: 'primary.main',
-                lineHeight: '17px',
-              }}
-              onClick={() => setOpen((prev) => !prev)}
-            >
-              Развернуть описание
-            </Typography>
-          </Box>
+        <Grid item xs={12} lg={5}>
+          {product?.description && (
+            <Box sx={{ mb: 5 }}>
+              <SectionTitle title='Описание' />
+              {product?.description}
+            </Box>
+          )}
           <Box>
             <SectionTitle title='Характеристики:' />
             <Stack
@@ -274,9 +203,7 @@ const ProductCard = ({ product }) => {
                     fontSize: '16px',
                     color: 'text.primary',
                   }}
-                >
-                  Attitude
-                </Typography>
+                ></Typography>
               </Box>
               <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Typography
@@ -291,7 +218,7 @@ const ProductCard = ({ product }) => {
                     color: 'text.primary',
                   }}
                 >
-                  FRW65646
+                  {product.sku}
                 </Typography>
               </Box>
               <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -306,43 +233,24 @@ const ProductCard = ({ product }) => {
                     fontSize: '16px',
                     color: 'text.primary',
                   }}
-                >
-                  Россия
-                </Typography>
+                ></Typography>
               </Box>
             </Stack>
-            <Typography
-              sx={{
-                fontWeight: 600,
-                fontSize: '15px',
-                color: 'primary.main',
-                lineHeight: '17px',
-              }}
-              onClick={() => setOpen((prev) => !prev)}
-            >
-              Развернуть все характеристики
-            </Typography>
           </Box>
         </Grid>
-        <Grid item sx={12} md={6}>
+        <Grid item xs={12} lg={7}>
           <SectionTitle title='С этим товаром рекомендуют' />
-          <Grid container>
-            {product.related.nodes.map((product, index) =>
-              index < 3 ? (
-                <Grid item xs={6} md={4}>
-                  <ProductItem product={product} />
-                </Grid>
-              ) : (
-                ''
-              )
-            )}
-          </Grid>
+          <NewProductsList
+            data={product.related.nodes.slice(0, 3)}
+            productCard2
+          />
         </Grid>
       </Grid>
-      <SimilarProducts
-        title='Похожие товары'
-        products={product.related.nodes}
-      />
+      <Box fontWeight={600} fontSize={25} lineHeight='34px' mb={2}>
+        Похожие товары
+      </Box>
+      <NewProductsList data={product.related.nodes} productCard />
+      <Box mb={4} pb={4} />
     </Box>
   )
 }

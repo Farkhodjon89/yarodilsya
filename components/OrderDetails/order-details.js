@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Typography } from '@mui/material'
 import { useSelector } from 'react-redux'
-import formatPrice from '../../utility/formatPrice'
+import { formatPrice } from 'utility/formatPrice'
 
 const OrderDetails = () => {
   const purchaseAmount = useSelector((state) => state.purchaseAmount)
