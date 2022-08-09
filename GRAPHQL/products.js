@@ -1,7 +1,7 @@
-import {gql} from "@apollo/client";
+import { gql } from '@apollo/client'
 
 export const PRODUCTS = gql`
-query MyQuery(
+  query MyQuery(
     $first: Int
     $after: String
     $categories: [String]
@@ -39,13 +39,8 @@ query MyQuery(
           name
           slug
         }
-        paBrands {
-        name
-        slug
-        databaseId
       }
-      }
-      
+
       nodes {
         databaseId
         slug
@@ -63,16 +58,11 @@ query MyQuery(
           woocsSalePrice
           variations(where: { stockStatus: IN_STOCK }) {
             nodes {
-              size: attributes(where: { taxonomy: "pa_size" }) {
-                nodes {
-                  value
-                }
-              }
+              databaseId
             }
           }
         }
       }
     }
   }
-
 `

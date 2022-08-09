@@ -11,7 +11,7 @@ import {
 } from '@mui/material'
 import QuantityCount from '../QuantityCount/quantity-count'
 import Image from 'next/image'
-import formatPrice from '../../utility/FormatPrice'
+import formatPrice from '../../utility/formatPrice'
 import Garbage from '../../public/icons/Garbage'
 import OrderDetails from '../OrderDetails/order-details'
 import AccordionPromoCode from '../AccordionPromoCode/accordion-promo-code'
@@ -284,7 +284,7 @@ const CartMain = ({ products = [], remove }) => {
       </Box>
       <Box sx={{ width: { xs: '100%', md: '33%' } }}>
         <Box sx={{ width: '100%' }}>
-          <AccordionPromoCode />
+          {/* <AccordionPromoCode /> */}
           <OrderDetails />
         </Box>
         <Box sx={{ textAlign: 'center', marginTop: '20px' }}>

@@ -6,12 +6,11 @@ import {
   CardActions,
   CardContent,
   CardMedia,
-  Grid,
   Typography,
 } from '@mui/material'
 import NextLink from 'next/link'
 import QuantityCount from '../QuantityCount/quantity-count'
-import formatPrice from '../../utility/FormatPrice'
+import { formatPrice } from '../../utility/formatPrice'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   addToCart,
@@ -42,6 +41,7 @@ const ProductItem = ({ product, title }) => {
       sx={{
         maxWidth: { xs: '180px', md: '200px' },
         boxShadow: 'none',
+        height: '100%',
         position: 'relative',
         marginRight: title === 'Товар дня' || matches ? '0px' : '20px',
         borderRadius: '8px',
@@ -50,7 +50,6 @@ const ProductItem = ({ product, title }) => {
         border: '2px solid transparent',
         '&:hover': {
           border: '2px solid #F2F2F2;',
-          boxShadow: '0 0 5px rgba(0,0,0,0.5)',
         },
       }}
       onMouseEnter={() => setVisible(true)}
@@ -97,9 +96,9 @@ const ProductItem = ({ product, title }) => {
                 fontWeight: 400,
                 fontSize: '15px',
                 color: 'grey.main',
-                display: 'webkitBox',
-                webkitBoxOrient: 'vertical',
-                webkitLineClamp: '2',
+                display: '-webkit-box',
+                '-webkit-box-orient': 'vertical',
+                '-webkit-line-clamp': '3',
                 textOverflow: 'ellipsis',
                 overflow: 'hidden',
               }}
@@ -113,7 +112,7 @@ const ProductItem = ({ product, title }) => {
                 color: 'text.primary',
               }}
             >
-              {formatPrice(product.woocsRegularPrice)}
+              {formatPrice(product?.woocsRegularPrice)}
             </Typography>
           </CardContent>
         </a>
@@ -128,9 +127,8 @@ const ProductItem = ({ product, title }) => {
                 }
           }
           sx={{
+            width: 100,
             textTransform: 'initial',
-            height: { xs: 30, md: '40px' },
-            maxWidth: '100px',
             fontSize: { xs: 12, md: 13 },
             boxShadow: 'none',
             color: 'white.main',

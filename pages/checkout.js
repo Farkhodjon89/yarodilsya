@@ -1,12 +1,12 @@
-import React from "react";
-import Layout from "../components/Layout/layout";
-import Breadcrumb from "../components/Breadcrumbs/breadcrumbs";
-import SectionTitle from "../components/SectionTitle/section-title";
-import CheckoutMain from "../components/Checkout/checkout";
-import {client} from "../apollo-client";
-import {CATEGORIES} from "../GRAPHQL/categories";
+import React from 'react'
+import Layout from '../components/Layout/layout'
+import Breadcrumb from '../components/Breadcrumbs/breadcrumbs'
+import SectionTitle from '../components/SectionTitle/section-title'
+import CheckoutMain from '../components/Checkout/checkout'
+import { client } from '../apollo-client'
+import { CATEGORIES } from '../graphql/categories'
 
-export default function Checkout({categories}) {
+export default function Checkout({ categories }) {
   const breadcrumbs = [
     {
       name: 'Главная',
@@ -19,11 +19,11 @@ export default function Checkout({categories}) {
   ]
 
   return (
-      <Layout categories={categories}>
-        <Breadcrumb breadcrumbs={breadcrumbs}/>
-        <SectionTitle title='Оформление заказа'/>
-        <CheckoutMain />
-      </Layout>
+    <Layout categories={categories}>
+      <Breadcrumb breadcrumbs={breadcrumbs} />
+      <SectionTitle title='Оформление заказа' />
+      <CheckoutMain />
+    </Layout>
   )
 }
 
@@ -32,9 +32,9 @@ export async function getStaticProps() {
     query: CATEGORIES,
   })
 
-  return{
+  return {
     props: {
-      categories: categories?.data?.productCategories?.nodes
-    }
+      categories: categories?.data?.productCategories?.nodes,
+    },
   }
 }

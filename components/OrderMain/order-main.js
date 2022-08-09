@@ -1,11 +1,12 @@
-import React from 'react';
+import React from 'react'
 
-const OrderMain = () => {
+const OrderMain = ({ order }) => {
   return (
-      <div>
+    <div style={{ textAlign: 'center', padding: '50px 0', margin: '50px 0' }}>
+      <h1> Спасибо за заказ!</h1>
+      <h3>Ваш номер заказа: {order.databaseId}</h3>
+    </div>
+  )
+}
 
-      </div>
-  );
-};
-
-export default OrderMain;
+export default OrderMain

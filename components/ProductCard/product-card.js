@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Box, Button, Grid, IconButton, Stack, Typography } from '@mui/material'
 import ReactImageGallery from 'react-image-gallery'
 import SectionTitle from '../SectionTitle/section-title'
-import formatPrice from '../../utility/FormatPrice'
+import formatPrice from '../../utility/formatPrice'
 import QuantityCount from '../QuantityCount/quantity-count'
 import Heart from '../../public/icons/Heart'
 import { useSelector, useDispatch } from 'react-redux'
@@ -11,6 +11,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { addToCart, removeFromCart } from '../../redux/actions/cart'
 import ProductItem from '../ProductItem/product-item'
 import SimilarProducts from '../SimilarProducts/similar-products'
+import { purchaseAmount } from 'redux/actions/purchaseAmount'
 
 const ProductCard = ({ product }) => {
   const [cartModal, setCartModal] = useState(false)
@@ -175,17 +176,17 @@ const ProductCard = ({ product }) => {
             spacing={2}
             sx={{ margin: '20px 0', alignItems: 'center' }}
           >
-            <QuantityCount
+            {/* <QuantityCount
               product={product}
               quantity={quantity}
               setQuantity={setQuantity}
-            />
+            /> */}
             <Button
+              fullWidth
               variant='contained'
               color={!alreadyAddedToCart ? 'primary' : 'secondary'}
               sx={{
                 height: '45px',
-                width: { xs: '200px', md: '240px' },
                 borderRadius: '8px',
                 display: 'flex',
                 justifyContent: 'center',
@@ -193,23 +194,19 @@ const ProductCard = ({ product }) => {
                 boxShadow: 'none',
                 color: 'white.main',
               }}
-              disabled={!selectedSize}
-              onClick={() => {
+              onClick={
                 alreadyAddedToCart
                   ? () => dispatch(removeFromCart(selectedId))
                   : () => {
                       dispatch(
                         addToCart(product, selectedId, selectedSize, quantity)
                       )
+                      dispatch(purchaseAmount(cart))
                       setCartModal(true)
                     }
-              }}
+              }
             >
-              {selectedSize
-                ? alreadyAddedToCart
-                  ? 'В корзине'
-                  : 'Добавить в корзину'
-                : 'Выбрать размер'}
+              {alreadyAddedToCart ? 'В корзине' : 'Добавить в корзину'}
             </Button>
             <IconButton
               aria-label='wishlist'

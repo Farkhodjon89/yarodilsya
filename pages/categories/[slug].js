@@ -3,50 +3,23 @@ import Layout from '../../components/Layout/layout'
 import Breadcrumb from '../../components/Breadcrumbs/breadcrumbs'
 import SectionTitle from '../../components/SectionTitle/section-title'
 import { Box, Typography } from '@mui/material'
-import NextLink from 'next/link'
-import Slider from 'react-slick'
 import Image from 'next/image'
 import { sliderBanners } from '../../slider-banners'
-import ArrowLeft from '../../public/icons/arrowLeft'
-import ArrowRight from '../../public/icons/arrowRight'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { client } from '../../apollo-client'
-import { CATEGORIES } from '../../GRAPHQL/categories'
-import { CATEGORY } from '../../GRAPHQL/category'
+import { CATEGORIES } from '../../graphql/categories'
+import { CATEGORY } from '../../graphql/category'
 import { useRouter } from 'next/router'
+import ItemsSlider from 'components/ItemsSlider'
+import Link from 'components/Link'
 
 export default function Categories({ categories, category }) {
-  const matches = useMediaQuery('(max-width: 600px)')
-
   const router = useRouter()
+  const mobile = useMediaQuery((theme) => theme.breakpoints.down('lg'))
   const currentCategory = categories.filter((category) =>
     category.slug === router.query.slug ? category.name : ''
   )
 
-  const SliderPrevArrow = (props) => (
-    <button className='sliderPrevArrow' onClick={props.onClick}>
-      <ArrowLeft />
-    </button>
-  )
-
-  const SliderNextArrow = (props) => (
-    <button className='sliderNextArrow' onClick={props.onClick}>
-      <ArrowRight />
-    </button>
-  )
-
-  const settings = {
-    arrows: true,
-    infinite: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    speed: 3000,
-    autoplaySpeed: 2000,
-    dots: true,
-    prevArrow: <SliderPrevArrow />,
-    nextArrow: <SliderNextArrow />,
-  }
   const breadcrumbs = [
     {
       name: 'Главная',
@@ -83,41 +56,39 @@ export default function Categories({ categories, category }) {
             Категории
           </Typography>
           {category?.map(({ id, name, slug }) => (
-            <NextLink key={id} href={`/catalog/${slug}`}>
-              <a>
-                <Typography
-                  sx={{
-                    fontWeight: 400,
-                    textTransform: 'capitalize',
-                    fontSize: '16px',
-                    lineHeight: '20px',
-                    marginBottom: '15px',
-                    color: 'btn.main',
-                  }}
-                >
-                  {name}
-                </Typography>
-              </a>
-            </NextLink>
+            <Link
+              key={id}
+              href={`/catalog/${slug}`}
+              sx={{ display: 'block', color: 'btn.main', mb: 2 }}
+            >
+              {name}
+            </Link>
           ))}
         </Box>
-        <Box sx={{ width: { xs: '100%', md: '75%' } }}>
-          <Box sx={{ maxWidth: '1050px' }}>
-            <Slider {...settings}>
-              {sliderBanners.map(({ id, image, mobImage }) => {
-                return (
-                  <Box key={id} sx={{ display: 'block', borderRadius: '8px' }}>
-                    <Image
-                      alt=''
-                      src={matches ? mobImage : image}
-                      width={1050}
-                      height={388}
-                    />
-                  </Box>
-                )
-              })}
-            </Slider>
-          </Box>
+        <Box width={{ xs: '100%', lg: '75%' }}>
+          <ItemsSlider slidesToShow={1} dots>
+            {sliderBanners.map(({ mobImage, image }, i) => (
+              <Box key={i}>
+                <Link
+                  href='/catalog'
+                  sx={{
+                    display: 'block !important',
+                    width: '100%',
+                    height: { xs: 170, lg: 388 },
+                    borderRadius: '8px',
+                    position: 'relative',
+                  }}
+                >
+                  <Image
+                    alt={mobile ? mobImage : image}
+                    src={mobile ? mobImage : image}
+                    layout='fill'
+                    priority
+                  />
+                </Link>
+              </Box>
+            ))}
+          </ItemsSlider>
         </Box>
       </Box>
     </Layout>

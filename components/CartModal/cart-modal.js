@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Box, Button, Grid, IconButton, Stack, Typography } from '@mui/material'
 import ReactImageGallery from 'react-image-gallery'
-import formatPrice from '../../utility/FormatPrice'
+import { formatPrice } from '../../utility/formatPrice'
 import QuantityCount from '../QuantityCount/quantity-count'
 import { addToCart, removeFromCart } from '../../redux/actions/cart'
 import Heart from '../../public/icons/Heart'

@@ -34,7 +34,6 @@ export const PRODUCT = gql`
         woocsSalePrice
         variations(where: { stockStatus: IN_STOCK }) {
           nodes {
-            stockQuantity
             databaseId
           }
         }
@@ -57,7 +56,7 @@ export const PRODUCT = gql`
             woocsSalePrice
             variations(where: { stockStatus: IN_STOCK }) {
               nodes {
-                name
+                databaseId
               }
             }
           }

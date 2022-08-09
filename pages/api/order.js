@@ -1,14 +1,13 @@
 import WooCommerceResApi from '@woocommerce/woocommerce-rest-api'
-import { CONSUMER_KEY, CONSUMER_SECRET, WP_URL } from '/next.config'
 
 const wc = new WooCommerceResApi({
-  url: WP_URL,
-  consumerKey: CONSUMER_KEY,
-  consumerSecret: CONSUMER_SECRET,
+  url: process.env.WP_URL,
+  consumerKey: process.env.CONSUMER_KEY,
+  consumerSecret: process.env.CONSUMER_SECRET,
   version: 'wc/v3',
 })
 
-export default async (req, res) => {
+export default async function order(req, res) {
   if (req.method === 'POST') {
     const { order } = req.body
     console.log(order)
@@ -17,8 +16,7 @@ export default async (req, res) => {
       response = await wc.post('orders', order)
     } catch (e) {
       res.end(JSON.stringify({ status: false, message: e.message }))
-      // console.log(e.response.data)
-
+      console.log(e)
       return
     }
     res.statusCode = 200

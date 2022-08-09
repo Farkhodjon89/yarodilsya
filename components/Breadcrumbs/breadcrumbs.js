@@ -1,19 +1,25 @@
-import React from 'react';
-import NextLink from 'next/link';
-import {Box,Breadcrumbs} from "@mui/material";
+import React from 'react'
+import { Breadcrumbs } from '@mui/material'
+import Link from 'components/Link'
 
-const Breadcrumb = ({breadcrumbs}) => {
+const Breadcrumb = ({ breadcrumbs }) => {
   return (
-      <Breadcrumbs sx={{padding: '20px 0'}}>
-        {breadcrumbs.map(({name,slug}, i) => (
-            <NextLink key={i} href={slug}>
-              <a style={{fontWeight: '400',fontSize: '13px', color: '#999999',lineHeight: '17px',}}>
-                {name}
-              </a>
-            </NextLink>
-        ))}
-      </Breadcrumbs>
-  );
-};
+    <Breadcrumbs sx={{ py: { xs: 1, lg: 2.5 } }}>
+      {breadcrumbs.map(({ name, slug }, i) => (
+        <Link
+          key={i}
+          href={slug}
+          sx={{
+            fontSize: 13,
+            lineHeight: '18px',
+            color: '#606060',
+          }}
+        >
+          {name}
+        </Link>
+      ))}
+    </Breadcrumbs>
+  )
+}
 
-export default Breadcrumb;
+export default Breadcrumb
