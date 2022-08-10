@@ -156,16 +156,20 @@ const CheckoutMain = () => {
         >
           {inputs.map((item) => (
             <TextField
-              key={item}
+              key={item.name}
               name={item.name}
               label={item.label}
               variant='outlined'
               required={item.required}
               sx={{
+                '& .MuiInputBase-root': {
+                  borderRadius: '8px',
+                },
+                '& .MuiOutlinedInput-notchedOutline': {
+                  boxShadow: '0px 4px 40px rgba(0, 0, 0, 0.1)',
+                  border: '1px solid #E8E8E8',
+                },
                 width: { xs: '100%', lg: '49%' },
-                border: '1px solid #E8E8E8',
-                borderRadius: '8px',
-                boxShadow: '0px 4px 40px rgba(0, 0, 0, 0.1)',
                 mb: 2,
               }}
               {...register(item.name, {

@@ -35,14 +35,16 @@ const Product = ({ product }) => {
         flexDirection: 'column',
         p: { xs: 0, lg: 1 },
         border: '2px solid transparent',
-        height: '100%',
         borderRadius: '8px',
         '&:hover': {
-          border: '2px solid #F2F2F2',
+          border: { xs: 'none', lg: '2px solid #F2F2F2' },
         },
       }}
     >
-      <Link href={`/product/${product.slug}`}>
+      <Link
+        href={`/product/${product.slug}`}
+        sx={{ display: 'flex', height: '100%', flexDirection: 'column' }}
+      >
         <Box
           position='relative'
           width='100%'

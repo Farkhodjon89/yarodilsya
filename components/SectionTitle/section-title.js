@@ -1,19 +1,17 @@
-import React from 'react'
-import { Typography } from '@mui/material'
+import { Box } from '@mui/material'
 
 const SectionTitle = ({ title, modal }) => {
   return (
-    <Typography
+    <Box
       sx={{
-        fontSize: { xs: '17px', length: !modal ? '25px' : '15px' },
         fontWeight: 600,
-        color: 'text.primary',
-        lineHeight: '18px',
+        fontSize: { xs: 17, lg: 30 },
+        lineHeight: { xs: '23px', lg: '41px' },
         mb: { xs: 2, lg: 3 },
       }}
     >
       {title}
-    </Typography>
+    </Box>
   )
 }
 

@@ -3,13 +3,21 @@ import QuantityArrow from 'public/icons/QuantityArrow'
 import { useDispatch } from 'react-redux'
 import { quantityToCart } from 'redux/actions/cart'
 
-const NewSetQuantity = ({ quantity, setQuantity, max, id, ml, mr }) => {
+const NewSetQuantity = ({
+  quantity,
+  setQuantity,
+  max,
+  id,
+  ml,
+  mr,
+  justifyContent = 'space-between',
+}) => {
   const dispatch = useDispatch()
   return (
     <Box
       display='flex'
       alignItems='center'
-      justifyContent='space-between'
+      justifyContent={justifyContent}
       ml={ml}
       mr={mr}
     >

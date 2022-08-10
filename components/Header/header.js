@@ -192,7 +192,19 @@ const Header = ({ categories }) => {
             </Box>
           </Box>
 
-          <Box sx={{ display: { xs: 'none', lg: 'flex' } }}>
+          <Box
+            sx={{
+              display: { xs: 'none', lg: 'flex' },
+              alignItems: 'center',
+              a: {
+                '&:hover': {
+                  path: {
+                    fillOpacity: 1,
+                  },
+                },
+              },
+            }}
+          >
             <Link href='/account'>
               <IconButton sx={{ marginLeft: '10px' }}>
                 <Login />

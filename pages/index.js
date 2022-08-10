@@ -50,7 +50,10 @@ const Home = ({ categories, products, discountedProducts }) => {
         mb={6}
         mt={1}
       >
-        <Box width={{ xs: '100%', lg: 'calc(100% - 300px)' }}>
+        <Box
+          width={{ xs: '100%', lg: 'calc(100% - 300px)' }}
+          mt={{ xs: 0, lg: 2.5 }}
+        >
           <ItemsSlider slidesToShow={1} dots>
             {sliderBanners.map(({ mobImage, image }, i) => (
               <Box key={i}>
