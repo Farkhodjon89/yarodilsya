@@ -3,7 +3,6 @@ import Head from 'next/head'
 import Header from '../Header/header'
 import { Container } from '@mui/material'
 import Footer from '../Footer/footer'
-import TopBar from '../TopBar/top-bar'
 import { useDispatch, useSelector } from 'react-redux'
 import { purchaseAmount } from 'redux/actions/purchaseAmount'
 
@@ -19,7 +18,6 @@ const Layout = ({ children, categories }) => {
         <title>YaRodilsya</title>
         <meta name='description' content='YaRodilsya description here.' />
       </Head>
-      <TopBar />
       <Header categories={categories} />
       <Container>{children}</Container>
       <Footer />
