@@ -27,11 +27,19 @@ import CatalogModal from '../CatalogModal/catalog-modal'
 import { useSelector } from 'react-redux'
 import Search from '../../public/icons/Search'
 import SearchMobile from '../../public/icons/SearchMobile'
+import { PRODUCTS } from 'graphql/products'
+import { useLazyQuery } from '@apollo/client'
+import { client } from 'apollo-client'
+import CatalogModalMob from 'components/CatalogModalMob/catalog-modal-mob'
 
 const Header = ({ categories }) => {
   const [open, setOpen] = useState(false)
-  const matches = useMediaQuery('(max-width: 900px)')
+  const mobile = useMediaQuery((theme) => theme.breakpoints.down('lg'))
   const [searchQuery, setSearchQuery] = useState('')
+  const [searchResults, setSearchResults] = useState([])
+  const [loadProducts, { data, loading }] = useLazyQuery(PRODUCTS, {
+    client,
+  })
 
   const cart = useSelector((state) => state.cart)
 
@@ -44,6 +52,26 @@ const Header = ({ categories }) => {
       document.body.style.backgroundColor = 'unset'
     }
   })
+
+  useEffect(() => {
+    if (data && searchQuery.length) {
+      setSearchResults(data.products.nodes)
+    }
+  }, [data, searchQuery.length])
+
+  const searchData = (e) => {
+    setSearchResults([])
+    setSearchQuery(e.target.value)
+
+    if (e.target.value.length) {
+      loadProducts({
+        variables: {
+          first: 10,
+          search: e.target.value,
+        },
+      })
+    }
+  }
 
   return (
     <AppBar
@@ -136,7 +164,7 @@ const Header = ({ categories }) => {
               }}
               onClick={() => setOpen((prev) => !prev)}
             >
-              {matches ? (
+              {mobile ? (
                 !open ? (
                   <BurgerMobile />
                 ) : (
@@ -160,17 +188,25 @@ const Header = ({ categories }) => {
               </Typography>
             </Button>
           </Box>
-          <CatalogModal
-            mainCategories={categories}
-            open={open}
-            setOpen={setOpen}
-          />
+          {mobile ? (
+            <CatalogModalMob
+              categories={categories}
+              open={open}
+              setOpen={setOpen}
+            />
+          ) : (
+            <CatalogModal
+              mainCategories={categories}
+              open={open}
+              setOpen={setOpen}
+            />
+          )}
           <Box sx={{ position: 'relative' }}>
             <TextField
               label='Поиск нужного товара...'
               variant='outlined'
               color='white'
-              size={matches ? 'small' : 'normal'}
+              size={mobile ? 'small' : 'normal'}
               InputLabelProps={{
                 style: { color: 'rgba(255, 255, 255, 0.8)' },
               }}
@@ -179,6 +215,8 @@ const Header = ({ categories }) => {
                   border: 'none',
                 },
               }}
+              value={searchQuery}
+              onChange={searchData}
             />
             <Box
               sx={{
@@ -188,7 +226,46 @@ const Header = ({ categories }) => {
                 cursor: 'pointer',
               }}
             >
-              {matches ? <SearchMobile /> : <Search />}
+              {mobile ? <SearchMobile /> : <Search />}
+            </Box>
+            <Box
+              sx={{
+                div: {
+                  position: 'absolute',
+                  top: { xs: 50, lg: 70 },
+                  left: 0,
+                  right: 0,
+                  width: '100%',
+                  height: 'auto',
+                  bgcolor: 'common.white',
+                  boxShadow: '1',
+                  p: 2,
+                  borderRadius: 1,
+                  color: 'text.primary',
+                },
+              }}
+            >
+              {loading && !searchResults.length ? (
+                <Box>Загрузка...</Box>
+              ) : searchQuery.length && !searchResults.length ? (
+                <Box> Товары не найдены</Box>
+              ) : searchResults.length ? (
+                <Box>
+                  {searchResults.map((item) => (
+                    <Link
+                      key={item.databaseId}
+                      href={`/product/${item.slug}`}
+                      sx={{
+                        display: 'block',
+                        mb: 2,
+                        textDecoration: 'underline',
+                      }}
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </Box>
+              ) : null}
             </Box>
           </Box>
 
