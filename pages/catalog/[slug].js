@@ -288,7 +288,7 @@ export default function Catalog({ categories, category, initialData }) {
               lineHeight='23px'
             >
               Фильтр
-              <Box>
+              <Box onClick={() => setOpenMobileFilter(false)}>
                 <Cross />
               </Box>
             </Box>
