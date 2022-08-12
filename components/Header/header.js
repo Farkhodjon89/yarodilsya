@@ -257,6 +257,7 @@ const Header = ({ categories }) => {
                   bgcolor: 'common.white',
                   boxShadow: '1',
                   p: 2,
+                  pl: 3,
                   borderRadius: 1,
                   color: 'text.primary',
                 },
