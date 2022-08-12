@@ -103,12 +103,12 @@ const Header = ({ categories }) => {
             </Link>
           </Box>
           <Box sx={{ display: { xs: 'flex', lg: 'none' } }}>
-            <Link href='/account'>
+            <Link href='/'>
               <IconButton sx={{ marginLeft: '10px' }}>
                 <LoginMobile />
               </IconButton>
             </Link>
-            <Link href='/wishlist'>
+            <Link href='/'>
               <IconButton sx={{ marginLeft: '10px' }}>
                 <WishlistMobile />
               </IconButton>
@@ -201,29 +201,46 @@ const Header = ({ categories }) => {
               setOpen={setOpen}
             />
           )}
-          <Box sx={{ position: 'relative' }}>
-            <TextField
-              label='Поиск нужного товара...'
-              variant='outlined'
-              color='white'
-              size={mobile ? 'small' : 'normal'}
-              InputLabelProps={{
-                style: { color: 'rgba(255, 255, 255, 0.8)' },
-              }}
+          <Box
+            sx={{
+              position: 'relative',
+            }}
+          >
+            <Box
               sx={{
-                '& .MuiOutlinedInput-notchedOutline': {
+                input: {
+                  width: { xs: 275, lg: 550 },
+                  height: { xs: 35, lg: 58 },
+                  backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                  borderRadius: '8px',
                   border: 'none',
+                  p: { xs: 1, lg: 2 },
+                  outline: 'none',
+                  fontSize: { xs: 14, lg: 17 },
+                  lineHeight: { xs: '19px', lg: '23px' },
+                  '&::placeholder': {
+                    color: 'rgba(255, 255, 255, 0.8)',
+                  },
+                  '&:hover': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.4)',
+                  },
+                  '&:focus': {
+                    backgroundColor: 'rgba(255, 255, 255, 1)',
+                  },
                 },
               }}
-              value={searchQuery}
-              onChange={searchData}
-            />
+            >
+              <input
+                value={searchQuery}
+                onChange={searchData}
+                placeholder='Поиск нужного товара...'
+              />
+            </Box>
             <Box
               sx={{
                 position: 'absolute',
-                right: '20px',
-                top: '30%',
-                cursor: 'pointer',
+                top: { xs: 9.5, lg: 19 },
+                right: { xs: 9.5, lg: 19 },
               }}
             >
               {mobile ? <SearchMobile /> : <Search />}
@@ -282,12 +299,12 @@ const Header = ({ categories }) => {
               },
             }}
           >
-            <Link href='/account'>
+            <Link href='/'>
               <IconButton sx={{ marginLeft: '10px' }}>
                 <Login />
               </IconButton>
             </Link>
-            <Link href='/wishlist'>
+            <Link href='/'>
               <IconButton sx={{ marginLeft: '10px', boxShadow: 'none' }}>
                 <Wishlist />
               </IconButton>
