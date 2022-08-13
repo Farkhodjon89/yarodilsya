@@ -42,7 +42,7 @@ const CatalogModal = ({ open, setOpen, mainCategories }) => {
             onMouseEnter={() => setActive(name)}
           >
             <Link
-              href={`/categories/${slug}`}
+              href={`/catalog/${slug}`}
               sx={{
                 display: 'flex',
                 justifyContent: 'space-between',

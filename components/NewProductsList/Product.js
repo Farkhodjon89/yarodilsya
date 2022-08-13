@@ -104,6 +104,13 @@ const Product = ({ product }) => {
         </Box>
       </Link>
       <Box display='flex' alignItems='center'>
+        <NewSetQuantity
+          quantity={quantity}
+          setQuantity={setQuantity}
+          max={product?.stockQuantity}
+          id={product?.databaseId}
+          mr={{ xs: 1, lg: 1.5 }}
+        />
         <Button
           fullWidth
           color={alreadyAddedToCart ? 'secondary' : 'primary'}
@@ -119,13 +126,6 @@ const Product = ({ product }) => {
         >
           {alreadyAddedToCart ? 'В корзине' : 'В корзину'}
         </Button>
-        <NewSetQuantity
-          quantity={quantity}
-          setQuantity={setQuantity}
-          max={product?.stockQuantity}
-          id={product?.databaseId}
-          ml={{ xs: 1, lg: 1.5 }}
-        />
       </Box>
     </Box>
   )
