@@ -1,48 +1,37 @@
 import React from 'react'
-import NextLink from 'next/link'
 import Image from 'next/image'
-import { Box, Typography, useMediaQuery } from '@mui/material'
+import { Grid } from '@mui/material'
 import SectionTitle from '../SectionTitle/section-title'
+import Link from 'components/Link'
+import { Box } from '@mui/system'
 
-const Categories = ({ categoriesBanners, title }) => {
-  const matches = useMediaQuery('(max-width: 900px)')
+const data = ['/', '/', '/', '/']
 
-  return (
-    <>
-      <SectionTitle title={title} />
-      <Box
-        sx={{
-          justifyContent: 'space-between',
-          display: 'flex',
-          flexWrap: 'wrap',
-          marginBottom: '40px',
-        }}
-      >
-        {categoriesBanners.map(({ id, image, mobImage }) => {
-          return (
-            <Box
-              key={id}
-              sx={{
-                width: { xs: '50%', md: '33.3%', lg: '16.66%' },
-                marginBottom: '5px',
-              }}
-            >
-              <NextLink href={'/'}>
-                <a>
-                  <Image
-                    alt=''
-                    src={matches ? mobImage : image}
-                    width={matches ? 155 : 200}
-                    height={matches ? 90 : 130}
-                  />
-                </a>
-              </NextLink>
-            </Box>
-          )
-        })}
-      </Box>
-    </>
-  )
-}
+const Categories = ({ title }) => (
+  <>
+    <SectionTitle title={title} />
+    <Grid container spacing={{ xs: 1, lg: 2.5 }}>
+      {data.map((item, index) => (
+        <Grid key={index} item xs={6} lg={3}>
+          <Link
+            href={item}
+            sx={{
+              position: 'relative',
+              display: 'block',
+              width: '100%',
+              height: { xs: 90, lg: 160 },
+            }}
+          >
+            <Image
+              alt='categories'
+              src={`/news/${index + 1}.webp`}
+              layout='fill'
+            />
+          </Link>
+        </Grid>
+      ))}
+    </Grid>
+  </>
+)
 
 export default Categories

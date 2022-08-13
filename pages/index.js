@@ -1,6 +1,5 @@
 import Layout from '../components/Layout/layout'
 import { brands } from '../brands'
-import { categoriesBanners } from '../categoriesBanners'
 import { sliderBanners } from '../slider-banners'
 import Categories from '../components/Categories/categories'
 import Banners from '../components/Banners/banners'
@@ -90,7 +89,7 @@ const Home = ({ categories, products, discountedProducts }) => {
           />
         </Box>
       </Box>
-      <Categories categoriesBanners={categoriesBanners} title='Поступление' />
+      <Categories title='Поступление' />
       <SliderProducts title='Хиты продаж' data={products} />
       <Banners
         background={
