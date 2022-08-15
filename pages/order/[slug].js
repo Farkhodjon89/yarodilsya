@@ -248,6 +248,14 @@ export default function Order({ order, categories }) {
         </Box>
         <Box sx={{ width: { xs: '100%', md: '33%' } }}>
           <Box sx={{ width: '100%' }}>
+            <Box
+              fontWeight={600}
+              fontSize={{ xs: 17, lg: 23 }}
+              lineHeight={{ xs: '23px', lg: '31px' }}
+              mb={2}
+            >
+              Ваш заказ: №{order.databaseId}
+            </Box>
             <OrderDetails
               length={products.length}
               total={order.total}
