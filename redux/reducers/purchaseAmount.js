@@ -21,7 +21,8 @@ export const purchaseAmount = (
       payload.forEach((product) => {
         subtotalPrice += product.woocsRegularPrice * product.selectedQuantity
         salePrice += product.onSale
-          ? product.woocsSalePrice * product.selectedQuantity
+          ? (product.woocsRegularPrice - product.woocsSalePrice) *
+            product.selectedQuantity
           : 0
       })
       let totalPrice = subtotalPrice - salePrice + deliveryPrice
