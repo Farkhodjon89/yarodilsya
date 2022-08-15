@@ -276,6 +276,7 @@ export default function Catalog({ categories, category, initialData }) {
               zIndex: 10000,
               py: 2,
               px: 3,
+              overflowY: 'auto',
             }}
           >
             <Box

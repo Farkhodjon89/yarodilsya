@@ -8,14 +8,9 @@ const ORDER = gql`
       date
       customerNote
       total(format: RAW)
-      status
       paymentMethodTitle
-      billing {
-        firstName
-        lastName
-        phone
-        address1
-      }
+      discountTotal(format: RAW)
+      subtotal(format: RAW)
       shippingLines {
         nodes {
           methodTitle
@@ -25,19 +20,24 @@ const ORDER = gql`
       lineItems {
         nodes {
           product {
-            name
             image {
               sourceUrl
+            }
+            name
+            databaseId
+            onSale
+            ... on SimpleProduct {
+              woocsRegularPrice
+              woocsSalePrice
+            }
+            ... on VariableProduct {
+              woocsRegularPrice
+              woocsSalePrice
             }
           }
           quantity
           total
-          color: metaData(key: "pa_color") {
-            value
-          }
-          size: metaData(key: "pa_size") {
-            value
-          }
+          subtotal
         }
       }
     }

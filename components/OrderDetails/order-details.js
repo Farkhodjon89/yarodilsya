@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material'
 import { useSelector } from 'react-redux'
 import { formatPrice } from 'utility/formatPrice'
 
-const OrderDetails = () => {
+const OrderDetails = ({ length, total, deliveryPrice, subtotal }) => {
   const purchaseAmount = useSelector((state) => state.purchaseAmount)
   const cart = useSelector((state) => state.cart)
   return (
@@ -43,7 +43,7 @@ const OrderDetails = () => {
               color: 'text.primary',
             }}
           >
-            {formatPrice(purchaseAmount?.subtotal?.price)}
+            {formatPrice(subtotal || purchaseAmount?.subtotal?.price)}
           </Typography>
         </Box>
         {/* <Box
@@ -127,7 +127,7 @@ const OrderDetails = () => {
               fontStyle: 'italic',
             }}
           >
-            {cart?.length} шт
+            {length || cart?.length} шт
           </Typography>
         </Box>
         <Box
@@ -155,7 +155,7 @@ const OrderDetails = () => {
               fontStyle: 'italic',
             }}
           >
-            {formatPrice(purchaseAmount?.delivery?.price)}
+            {formatPrice(deliveryPrice || purchaseAmount?.delivery?.price)}
           </Typography>
         </Box>
       </Box>
@@ -185,7 +185,7 @@ const OrderDetails = () => {
               color: 'text.primary',
             }}
           >
-            {formatPrice(purchaseAmount?.total?.price)}
+            {formatPrice(total || purchaseAmount?.total?.price)}
           </Typography>
         </Box>
         {/* <Box

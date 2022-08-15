@@ -292,6 +292,11 @@ const Header = ({ categories }) => {
               display: { xs: 'none', lg: 'flex' },
               alignItems: 'center',
               a: {
+                button: {
+                  '&:hover': {
+                    background: 'none',
+                  },
+                },
                 '&:hover': {
                   path: {
                     fillOpacity: 1,

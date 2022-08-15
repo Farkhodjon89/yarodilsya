@@ -82,7 +82,7 @@ const CheckoutMain = () => {
       price: product.onSale
         ? product.woocsSalePrice
         : product.woocsRegularPrice,
-      quantity: product.quantity,
+      quantity: product.selectedQuantity,
       variation_id: product.variations && product.selectedProductId,
     })
   }

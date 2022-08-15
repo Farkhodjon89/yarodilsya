@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart, removeFromCart } from 'redux/actions/cart'
 import { formatPrice } from 'utility/formatPrice'
+import { getDiscount } from 'utility/getDiscount'
 
 const Product = ({ product }) => {
   const dispatch = useDispatch()
@@ -57,6 +58,25 @@ const Product = ({ product }) => {
             src={product?.image?.sourceUrl}
             layout='fill'
           />
+          {product?.onSale && (
+            <Box
+              position='absolute'
+              top={10}
+              left={10}
+              bgcolor='#FF3030'
+              borderRadius='8px'
+              sx={{
+                color: 'common.white',
+                fontWeight: 700,
+                fontSize: 13,
+                lineHeight: '18px',
+                filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
+                px: 0.5,
+              }}
+            >
+              {getDiscount(product?.woocsRegularPrice, product?.woocsSalePrice)}
+            </Box>
+          )}
         </Box>
         <Box
           sx={{
