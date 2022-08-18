@@ -66,7 +66,9 @@ export default function Catalog({ categories, category, initialData }) {
   const [filters, setFilters] = useState([])
   const [colorTerms, setColorTerms] = useState([])
   const [sizeTerms, setSizeTerms] = useState([])
+  const [brandTerms, setBrandTerms] = useState([])
   const [sortBy, setSortBy] = useState('')
+  const [val, setVal] = useState({ min: 0, max: 1000000 })
   const [data, setData] = useState({
     products: initialData?.nodes || [],
     endCursor: initialData?.pageInfo?.endCursor,
@@ -114,6 +116,7 @@ export default function Catalog({ categories, category, initialData }) {
               hasNextPage: moreData?.products?.pageInfo?.hasNextPage,
               colors: moreData?.products?.activeTerms?.paColors,
               sizes: moreData?.products?.activeTerms?.paSizes,
+              brands: moreData?.products?.activeTerms?.paBrands,
             }
         )
       },
@@ -132,6 +135,8 @@ export default function Catalog({ categories, category, initialData }) {
         after: data?.endCursor || undefined,
         filters: filters.length ? filters : undefined,
         search: onSearch || undefined,
+        minPrice: val.min,
+        maxPrice: val.max,
         orderBy: sortBy
           ? [
               {
@@ -162,10 +167,18 @@ export default function Catalog({ categories, category, initialData }) {
               },
             ]
           : []),
+        ...(brandTerms.length
+          ? [
+              {
+                taxonomy: 'PABRAND',
+                terms: brandTerms.map((brand) => brand.slug),
+              },
+            ]
+          : []),
       ])
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [colorTerms, sizeTerms])
+  }, [colorTerms, sizeTerms, brandTerms])
 
   useEffect(() => {
     if (!firstRender) {
@@ -175,11 +188,27 @@ export default function Catalog({ categories, category, initialData }) {
         hasNextPage: false,
         colors: [],
         sizes: [],
+        brands: [],
       })
       customLoadData()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters])
+
+  useEffect(() => {
+    if (!firstRender) {
+      setData({
+        products: [],
+        endCursor: '',
+        hasNextPage: false,
+        colors: [],
+        sizes: [],
+        brands: [],
+      })
+      customLoadData()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [val])
 
   useEffect(() => {
     if (onSale) {
@@ -189,6 +218,7 @@ export default function Catalog({ categories, category, initialData }) {
         hasNextPage: false,
         colors: [],
         sizes: [],
+        brands: [],
       })
       customLoadData()
     }
@@ -203,6 +233,7 @@ export default function Catalog({ categories, category, initialData }) {
         hasNextPage: false,
         colors: [],
         sizes: [],
+        brands: [],
       })
       customLoadData()
     }
@@ -227,6 +258,8 @@ export default function Catalog({ categories, category, initialData }) {
       name: 'Скидкам',
     },
   ]
+
+  console.log('val', val)
 
   return (
     <Layout categories={categories}>
@@ -301,6 +334,11 @@ export default function Catalog({ categories, category, initialData }) {
               sizes={data?.sizes}
               sizeTerms={sizeTerms}
               setSizeTerms={setSizeTerms}
+              brands={data?.brands}
+              brandTerms={brandTerms}
+              setBrandTerms={setBrandTerms}
+              val={val}
+              setVal={setVal}
             />
             <Box mt={3} />
             <Button fullWidth onClick={() => setOpenMobileFilter(false)}>
@@ -319,6 +357,11 @@ export default function Catalog({ categories, category, initialData }) {
             sizes={data?.sizes}
             sizeTerms={sizeTerms}
             setSizeTerms={setSizeTerms}
+            brands={data?.brands}
+            brandTerms={brandTerms}
+            setBrandTerms={setBrandTerms}
+            val={val}
+            setVal={setVal}
           />
         </Grid>
         <Grid item xs={12} md={9}>

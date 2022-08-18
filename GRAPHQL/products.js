@@ -9,6 +9,8 @@ export const PRODUCTS = gql`
     $onSale: Boolean
     $search: String
     $orderBy: [ProductsOrderbyInput]
+    $minPrice: Float
+    $maxPrice: Float
   ) {
     products(
       first: $first
@@ -21,6 +23,8 @@ export const PRODUCTS = gql`
         taxonomyFilter: { and: $filters }
         search: $search
         orderby: $orderBy
+        minPrice: $minPrice
+        maxPrice: $maxPrice
       }
     ) {
       pageInfo {
@@ -35,6 +39,11 @@ export const PRODUCTS = gql`
           color
         }
         paSizes {
+          databaseId
+          name
+          slug
+        }
+        paBrands {
           databaseId
           name
           slug

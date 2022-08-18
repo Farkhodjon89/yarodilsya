@@ -8,13 +8,13 @@ import { useEffect, useState } from 'react'
 const Colors = ({ colors = [], colorTerms, setColorTerms }) => {
   const [open, setOpen] = useState(false)
   const [data, setData] = useState([])
-  const checkLength = colors.length !== data.length
+  const checkLength = colors?.length !== data?.length
 
   useEffect(() => {
     if (open) {
       setData(colors)
     } else {
-      setData(colors.slice(0, 4))
+      setData(colors?.slice(0, 4))
     }
   }, [colors, open])
 
@@ -29,6 +29,7 @@ const Colors = ({ colors = [], colorTerms, setColorTerms }) => {
               justifyContent: 'start',
               color: 'text.primary',
               mb: 0.5,
+              p: 0.5,
             }}
             onClick={() => addToArray(color, colorTerms, setColorTerms)}
             variant='text'

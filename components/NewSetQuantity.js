@@ -27,6 +27,9 @@ const NewSetQuantity = ({
           alignItems: 'center',
           justifyContent: 'center',
           cursor: 'pointer',
+          '&:hover': {
+            circle: { stroke: '#49D6A3', fill: '#ebfaf5' },
+          },
         }}
         onClick={() => {
           if (quantity !== 1) {
@@ -46,6 +49,9 @@ const NewSetQuantity = ({
           cursor: 'pointer',
           svg: {
             transform: 'rotate(180deg)',
+          },
+          '&:hover': {
+            circle: { stroke: '#49D6A3', fill: '#ebfaf5' },
           },
         }}
         onClick={() => {

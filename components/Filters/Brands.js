@@ -6,22 +6,22 @@ import NotChecked from 'public/icons/NotChecked'
 import { Box } from '@mui/system'
 import { useEffect, useState } from 'react'
 
-const Sizes = ({ sizes = [], sizeTerms, setSizeTerms }) => {
+const Brands = ({ brands = [], brandTerms, setBrandTerms }) => {
   const [open, setOpen] = useState(false)
   const [data, setData] = useState([])
-  const checkLength = sizes?.length !== data?.length
+  const checkLength = brands.length !== data.length
 
   useEffect(() => {
     if (open) {
-      setData(sizes)
+      setData(brands)
     } else {
-      setData(sizes?.slice(0, 4))
+      setData(brands.slice(0, 4))
     }
-  }, [sizes, open])
+  }, [brands, open])
   return (
-    <Accordion title='Размер'>
-      {data?.map((size) => (
-        <Box key={size.databaseId}>
+    <Accordion title='Бренды'>
+      {data?.map((brand) => (
+        <Box key={brand.databaseId}>
           <Button
             fullWidth
             size='large'
@@ -33,20 +33,20 @@ const Sizes = ({ sizes = [], sizeTerms, setSizeTerms }) => {
               p: 0.5,
             }}
             variant='text'
-            onClick={() => addToArray(size, sizeTerms, setSizeTerms)}
+            onClick={() => addToArray(brand, brandTerms, setBrandTerms)}
           >
             <Box display='flex' alignItems='center' mr={1}>
-              {sizeTerms.map((size) => size.slug).includes(size.slug) ? (
+              {brandTerms.map((brand) => brand.slug).includes(brand.slug) ? (
                 <Checked />
               ) : (
                 <NotChecked />
               )}
             </Box>
-            {size.name}
+            {brand.name}
           </Button>
         </Box>
       ))}
-      {sizes?.length > 4 && checkLength && (
+      {brands?.length > 4 && checkLength && (
         <Box
           onClick={() => setOpen(true)}
           sx={{
@@ -69,4 +69,4 @@ const Sizes = ({ sizes = [], sizeTerms, setSizeTerms }) => {
   )
 }
 
-export default Sizes
+export default Brands

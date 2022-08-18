@@ -70,7 +70,6 @@ const Product = ({ product }) => {
                 fontWeight: 700,
                 fontSize: 13,
                 lineHeight: '18px',
-                filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
                 px: 0.5,
               }}
             >
@@ -142,6 +141,9 @@ const Product = ({ product }) => {
           }
           sx={{
             color: 'common.white',
+            '&:hover': {
+              bgcolor: alreadyAddedToCart ? '#4DDDA8' : '#FE5EBE',
+            },
           }}
         >
           {alreadyAddedToCart ? 'В корзине' : 'В корзину'}

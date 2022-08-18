@@ -50,6 +50,12 @@ const CatalogModal = ({ open, setOpen, mainCategories }) => {
                 padding: '0 20px',
                 color: active === name ? 'primary.main' : 'text.primary',
                 marginBottom: '30px',
+                fontWeight: active === name ? 600 : 400,
+                fontSize: 15,
+                lineHeight: '20px',
+                '&:hover': {
+                  fontWeight: 600,
+                },
               }}
             >
               {name}
@@ -86,8 +92,10 @@ const CatalogModal = ({ open, setOpen, mainCategories }) => {
                   href={`/catalog/${slug}`}
                   sx={{
                     fontWeight: 600,
+                    fontSize: 14,
+                    lineHeight: '19px',
+                    color: '#1F3A8F',
                     mb: 2,
-                    color: 'btn.main',
                   }}
                 >
                   {name}
@@ -97,7 +105,16 @@ const CatalogModal = ({ open, setOpen, mainCategories }) => {
                     <Link
                       href={`/catalog/${slug}`}
                       key={databaseId}
-                      sx={{ mb: 1 }}
+                      sx={{
+                        mb: 1,
+                        fontWeight: 400,
+                        fontSize: 15,
+                        lineHeight: '20px',
+                        color: '#828282',
+                        '&:hover': {
+                          color: '#303030',
+                        },
+                      }}
                     >
                       {name}
                     </Link>

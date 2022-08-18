@@ -23,6 +23,7 @@ const Categories = ({ category }) => {
             fontSize: 16,
             lineHeight: '22px',
             color: '#999999',
+            p: 0.5,
           }}
           variant='text'
         >
