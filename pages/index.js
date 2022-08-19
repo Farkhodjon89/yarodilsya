@@ -18,6 +18,7 @@ const Home = ({ categories, products, discountedProducts }) => {
     <Layout categories={categories}>
       <Box
         sx={{
+          mt: 1,
           py: { xs: 0.5, lg: 1.5 },
           borderBottom: '2px solid rgba(221, 221, 221, 0.5)',
         }}
@@ -89,7 +90,7 @@ const Home = ({ categories, products, discountedProducts }) => {
           />
         </Box>
       </Box>
-      <Categories title='Поступление' />
+      <Categories />
       <SliderProducts title='Хиты продаж' data={products} />
       <Banners
         background={

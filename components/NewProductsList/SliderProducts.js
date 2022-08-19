@@ -16,11 +16,13 @@ const SliderProducts = ({ title = '', data = [], slidesToShow }) => (
     >
       {title}
     </Box>
-    <ItemsSlider slidesToShow={slidesToShow} dots={!!slidesToShow}>
-      {data.map((item) => (
-        <Product product={item} key={item.databaseId} />
-      ))}
-    </ItemsSlider>
+    <Box mx={{ xs: 0, lg: -2 }}>
+      <ItemsSlider slidesToShow={slidesToShow} dots={!!slidesToShow}>
+        {data.map((item) => (
+          <Product product={item} key={item.databaseId} />
+        ))}
+      </ItemsSlider>
+    </Box>
   </Box>
 )
 

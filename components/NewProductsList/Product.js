@@ -32,6 +32,7 @@ const Product = ({ product }) => {
     <Box
       sx={{
         display: 'flex',
+        width: '100%',
         height: '100%',
         flexDirection: 'column',
         p: { xs: 0, lg: 1 },

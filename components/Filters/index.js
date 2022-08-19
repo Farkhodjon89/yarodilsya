@@ -23,7 +23,7 @@ const Filters = ({
   return (
     <>
       <Categories category={category} />
-      <Box mb={2}>
+      {/* <Box mb={2}>
         <Box fontWeight={600} fontSize={16} lineHeight='22px' mb={2}>
           Цена
         </Box>
@@ -85,7 +85,7 @@ const Filters = ({
           step={10000}
           draggableTrack={false}
         />
-      </Box>
+      </Box> */}
       {!!brands?.length && (
         <Brands
           brands={brands}

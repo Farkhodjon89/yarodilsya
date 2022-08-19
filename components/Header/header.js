@@ -5,7 +5,6 @@ import {
   Button,
   Container,
   IconButton,
-  TextField,
   Badge,
   Toolbar,
   Typography,
@@ -104,17 +103,17 @@ const Header = ({ categories }) => {
           </Box>
           <Box sx={{ display: { xs: 'flex', lg: 'none' } }}>
             <Link href='/'>
-              <IconButton sx={{ marginLeft: '10px' }}>
+              <IconButton sx={{ marginLeft: '10px' }} disableRipple>
                 <LoginMobile />
               </IconButton>
             </Link>
             <Link href='/'>
-              <IconButton sx={{ marginLeft: '10px' }}>
+              <IconButton sx={{ marginLeft: '10px' }} disableRipple>
                 <WishlistMobile />
               </IconButton>
             </Link>
             <Link href='/cart'>
-              <IconButton sx={{ marginLeft: '10px' }}>
+              <IconButton sx={{ marginLeft: '10px' }} disableRipple>
                 <Badge badgeContent={cart.length} color='primary'>
                   <CartMobile />
                 </Badge>
@@ -292,11 +291,6 @@ const Header = ({ categories }) => {
               display: { xs: 'none', lg: 'flex' },
               alignItems: 'center',
               a: {
-                button: {
-                  '&:hover': {
-                    background: 'none',
-                  },
-                },
                 '&:hover': {
                   path: {
                     fillOpacity: 1,
@@ -306,17 +300,20 @@ const Header = ({ categories }) => {
             }}
           >
             <Link href='/'>
-              <IconButton sx={{ marginLeft: '10px' }}>
+              <IconButton sx={{ marginLeft: '10px' }} disableRipple>
                 <Login />
               </IconButton>
             </Link>
             <Link href='/'>
-              <IconButton sx={{ marginLeft: '10px', boxShadow: 'none' }}>
+              <IconButton
+                sx={{ marginLeft: '10px', boxShadow: 'none' }}
+                disableRipple
+              >
                 <Wishlist />
               </IconButton>
             </Link>
             <Link href='/cart'>
-              <IconButton sx={{ marginLeft: '10px' }}>
+              <IconButton sx={{ marginLeft: '10px' }} disableRipple>
                 <Badge badgeContent={cart.length} color='primary'>
                   <Cart />
                 </Badge>

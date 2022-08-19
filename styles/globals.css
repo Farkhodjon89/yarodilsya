@@ -13,10 +13,6 @@
   font-display: swap;
 }
 
-.MuiContainer-root {
-  max-width: 1300px !important;
-}
-
 .MuiIconButton-root {
   box-shadow: none;
 }
@@ -54,4 +50,21 @@
 }
 .input-range__label {
   display: none !important;
+}
+
+.slick-dots > li > button {
+  width: 50px !important;
+  height: 50px !important;
+}
+
+.slick-dots > li > button::before {
+  width: 50px !important;
+  height: 50px !important;
+  font-size: 12px !important;
+  line-height: 50px !important;
+  color: #1f3a8f !important;
+}
+
+.slick-dots > .slick-active > button::before {
+  opacity: 1 !important;
 }

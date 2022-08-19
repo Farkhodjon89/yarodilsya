@@ -32,6 +32,13 @@ export let theme = createTheme({
     },
   },
   components: {
+    MuiContainer: {
+      defaultProps: {
+        disableGutters: true,
+        fixed: true,
+        maxWidth: 'xl',
+      },
+    },
     MuiButton: {
       defaultProps: {
         disableElevation: true,
@@ -53,6 +60,19 @@ export let theme = createTheme({
 
 theme = createTheme(theme, {
   components: {
+    MuiContainer: {
+      styleOverrides: {
+        maxWidthXl: {
+          [theme.breakpoints.down('lg')]: {
+            padding: '0 16px',
+            maxWidth: '100%',
+          },
+          [theme.breakpoints.up('lg')]: {
+            maxWidth: '1300px',
+          },
+        },
+      },
+    },
     MuiCssBaseline: {
       styleOverrides: {
         body: {

@@ -10,19 +10,17 @@ const CatalogModal = ({ open, setOpen, mainCategories }) => {
     <Box
       sx={{
         display: !open ? 'none' : 'block',
-        width: { xs: '100vw', md: '100%' },
+        width: { xs: '100vw', lg: 1340 },
         position: 'absolute',
-        top: { xs: '44px', md: '90px' },
-        height: { xs: '100vh', md: '550px' },
+        top: { xs: '44px', lg: '90px' },
+        height: { xs: '100vh', lg: '550px' },
         overflowY: 'auto',
         padding: '30px 0',
-        left: { xs: '50%', md: '0' },
-        right: { xs: '50%', md: 'none' },
-        marginRight: { xs: '-50vw', md: '0' },
-        marginLeft: { xs: '-50vw', md: '0' },
-        zIndex: '10',
+        zIndex: 100,
         backgroundColor: '#fff',
-        borderRadius: { xs: '0', md: '10px' },
+        borderRadius: { xs: '0', lg: '10px' },
+        left: '50%',
+        transform: 'translateX(-50%)',
       }}
       onClick={() => setOpen((prev) => !prev)}
     >
@@ -36,7 +34,7 @@ const CatalogModal = ({ open, setOpen, mainCategories }) => {
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              width: { xs: '100%', md: '25%' },
+              width: { xs: '100%', lg: '25%' },
               borderRight: '2px solid #CCCCCC;',
             }}
             onMouseEnter={() => setActive(name)}
@@ -68,7 +66,7 @@ const CatalogModal = ({ open, setOpen, mainCategories }) => {
               fontWeight: 400,
               padding: '0 20px',
               fontSize: '15px',
-              visibility: { xs: 'hidden', md: 'visible' },
+              visibility: { xs: 'hidden', lg: 'visible' },
               display: active === name ? 'flex' : 'none',
               flexWrap: 'wrap',
               color: 'text.primary',
