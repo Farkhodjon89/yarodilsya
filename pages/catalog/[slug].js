@@ -39,7 +39,7 @@ const ButtonComponent = ({ key, action, name }) => (
     onClick={action}
     sx={{
       fontWeight: 400,
-      fontSize: 13,
+      fontSize: 14,
       lineHeight: '18px',
       mr: 1,
       color: '#606060',
@@ -400,6 +400,13 @@ export default function Catalog({ categories, category, initialData }) {
                 mb: 2,
               }}
             >
+              {brandTerms.map((brand) => (
+                <ButtonComponent
+                  key={brand.databaseId}
+                  name={brand.name}
+                  action={() => addToArray(brand, brandTerms, setBrandTerms)}
+                />
+              ))}
               {colorTerms.map((color) => (
                 <ButtonComponent
                   key={color.databaseId}

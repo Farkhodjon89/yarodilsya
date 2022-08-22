@@ -7,7 +7,7 @@ import {
 } from '@mui/material'
 import ArrowDown from 'public/icons/ArrowDown'
 
-const Accordion = ({ title = '', children }) => {
+const Accordion = ({ title = '', children, maxHeight = 300 }) => {
   return (
     <MuiAccordion
       defaultExpanded
@@ -32,7 +32,7 @@ const Accordion = ({ title = '', children }) => {
       <AccordionDetails
         sx={{
           px: 0,
-          maxHeight: 300,
+          maxHeight,
           overflowY: 'auto',
         }}
       >

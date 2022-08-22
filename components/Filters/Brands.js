@@ -56,7 +56,7 @@ const Brands = ({ brands = [], brandTerms, setBrandTerms }) => {
             backgroundColor: 'rgba(234, 86, 174, 0.1)',
             borderRadius: '25px',
             py: 0.5,
-            fontSize: 13,
+            fontSize: 14,
             lineHeight: '18px',
             mx: 'auto',
             cursor: 'pointer',

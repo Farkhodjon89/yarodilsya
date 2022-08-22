@@ -77,8 +77,8 @@ theme = createTheme(theme, {
       styleOverrides: {
         body: {
           [theme.breakpoints.down('lg')]: {
-            fontSize: 13,
-            lineHeight: '17px',
+            fontSize: 14,
+            lineHeight: '18px',
           },
           [theme.breakpoints.up('lg')]: {
             fontSize: 15,
@@ -91,8 +91,8 @@ theme = createTheme(theme, {
       styleOverrides: {
         root: {
           [theme.breakpoints.down('lg')]: {
-            fontSize: 13,
-            lineHeight: '17px',
+            fontSize: 14,
+            lineHeight: '18px',
           },
           [theme.breakpoints.up('lg')]: {
             fontSize: 16,

@@ -138,11 +138,17 @@ const Header = ({ categories }) => {
               justifyContent: 'space-between',
             }}
           >
-            <Box sx={{ display: { xs: 'none', lg: 'block' } }}>
-              <Link href='/'>
-                <Image alt='' width={205} height={60} src='/logo.svg' />
-              </Link>
-            </Box>
+            <Link
+              href='/'
+              sx={{
+                display: { xs: 'none', lg: 'block' },
+                position: 'relative',
+                width: 205,
+                height: 60,
+              }}
+            >
+              <Image alt='' src='/logo.svg' layout='fill' />
+            </Link>
             <Button
               variant='contained'
               sx={{
@@ -203,12 +209,15 @@ const Header = ({ categories }) => {
           <Box
             sx={{
               position: 'relative',
+              width: '100%',
+              ml: { xs: 1, lg: 3 },
+              mr: { xs: 0, lg: 1 },
             }}
           >
             <Box
               sx={{
                 input: {
-                  width: { xs: 275, lg: 550 },
+                  width: '100%',
                   height: { xs: 35, lg: 58 },
                   backgroundColor: 'rgba(255, 255, 255, 0.2)',
                   borderRadius: '8px',

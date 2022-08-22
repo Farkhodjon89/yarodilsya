@@ -69,7 +69,7 @@ const Product = ({ product }) => {
               sx={{
                 color: 'common.white',
                 fontWeight: 700,
-                fontSize: 13,
+                fontSize: 14,
                 lineHeight: '18px',
                 px: 0.5,
               }}

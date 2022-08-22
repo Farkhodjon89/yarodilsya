@@ -44,7 +44,7 @@ const ProductCard = ({ product }) => {
 
   return (
     <Box>
-      <SectionTitle title={product.name} />
+      <SectionTitle title={product.name} withBack />
       <Box
         sx={{
           display: 'flex',
@@ -57,18 +57,32 @@ const ProductCard = ({ product }) => {
             width: { xs: '100%', lg: '45%' },
             mr: { xs: 0, lg: 3 },
             mb: { xs: 2, lg: 0 },
+            '& .image-gallery-slide-wrapper': {
+              width: { xs: '100%', lg: 'calc(100% - 110px)' },
+            },
+            '& .image-gallery-slide': {
+              width: '100%',
+            },
             '.image-gallery-slide .image-gallery-image': {
               objectFit: 'cover !important',
               minHeight: { xs: '340px !important', lg: '580px !important' },
               height: { xs: '340px !important', lg: '580px !important' },
               maxHeight: { xs: '340px !important', lg: '580px !important' },
+              border: '1px solid #E8E8E8 !important',
+              filter: 'drop-shadow(0px 4px 40px rgba(0, 0, 0, 0.1)) !important',
+              borderRadius: '8px !important',
+              overflow: 'hidden',
             },
             '.image-gallery-thumbnail': {
               width: { lg: '90px' },
               borderRadius: '8px',
+              overflow: 'hidden',
+              '&:hover': {
+                border: '2px solid #EA56AE',
+              },
             },
-            '.image-gallery-thumbnail ': {
-              border: '2px solid #EA56AE;',
+            '.image-gallery-thumbnail.active': {
+              border: '2px solid #EA56AE',
             },
             '.image-gallery-right-nav .image-gallery-svg': {
               height: '72px !important',
@@ -106,8 +120,8 @@ const ProductCard = ({ product }) => {
         >
           <Box
             sx={{
-              fontSize: { xs: 15, lg: 19 },
-              lineHeight: { xs: '20px', lg: '26px' },
+              fontSize: { xs: 17, lg: 25 },
+              lineHeight: { xs: '23px', lg: '32px' },
               fontWeight: 600,
               color: 'text.primary',
               mt: 'auto',
@@ -117,8 +131,8 @@ const ProductCard = ({ product }) => {
             {product?.onSale && (
               <Box
                 sx={{
-                  fontSize: { xs: 15, lg: 16 },
-                  lineHeight: { xs: '20px', lg: '22px' },
+                  fontSize: { xs: 14, lg: 17 },
+                  lineHeight: { xs: '19px', lg: '23px' },
                   textDecoration: 'line-through',
                   textDecorationColor: 'red',
                   color: '#606060',

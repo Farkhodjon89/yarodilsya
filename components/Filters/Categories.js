@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 const Categories = ({ category }) => {
   const router = useRouter()
   return (
-    <Accordion title='Подгатегории'>
+    <Accordion title='Подгатегории' maxHeight='auto'>
       {category?.children?.nodes.map((category) => (
         <Button
           key={category.databaseId}

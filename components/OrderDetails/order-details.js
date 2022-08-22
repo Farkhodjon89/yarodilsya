@@ -29,7 +29,7 @@ const OrderDetails = ({ length, total, deliveryPrice, subtotal }) => {
         >
           <Typography
             sx={{
-              fontSize: { xs: '13px', md: '17px' },
+              fontSize: { xs: '14px', md: '17px' },
               fontWeight: 600,
               color: 'text.primary',
             }}
@@ -38,7 +38,7 @@ const OrderDetails = ({ length, total, deliveryPrice, subtotal }) => {
           </Typography>
           <Typography
             sx={{
-              fontSize: { xs: '13px', md: '17px' },
+              fontSize: { xs: '14px', md: '17px' },
               fontWeight: 600,
               color: 'text.primary',
             }}
@@ -55,7 +55,7 @@ const OrderDetails = ({ length, total, deliveryPrice, subtotal }) => {
         >
           <Typography
             sx={{
-              fontSize: { xs: '13px', md: '17px' },
+              fontSize: { xs: '14px', md: '17px' },
               fontWeight: 400,
               color: 'grey.main',
               fontStyle: 'italic',
@@ -65,7 +65,7 @@ const OrderDetails = ({ length, total, deliveryPrice, subtotal }) => {
           </Typography>
           <Typography
             sx={{
-              fontSize: { xs: '13px', md: '17px' },
+              fontSize: { xs: '14px', md: '17px' },
               fontWeight: 400,
               color: 'grey.main',
               fontStyle: 'italic',
@@ -83,7 +83,7 @@ const OrderDetails = ({ length, total, deliveryPrice, subtotal }) => {
         >
           <Typography
             sx={{
-              fontSize: { xs: '13px', md: '17px' },
+              fontSize: { xs: '14px', md: '17px' },
               fontWeight: 400,
               color: 'grey.main',
               fontStyle: 'italic',
@@ -93,7 +93,7 @@ const OrderDetails = ({ length, total, deliveryPrice, subtotal }) => {
           </Typography>
           <Typography
             sx={{
-              fontSize: { xs: '13px', md: '17px' },
+              fontSize: { xs: '14px', md: '17px' },
               fontWeight: 400,
               color: 'grey.main',
               fontStyle: 'italic',
@@ -111,7 +111,7 @@ const OrderDetails = ({ length, total, deliveryPrice, subtotal }) => {
         >
           <Typography
             sx={{
-              fontSize: { xs: '13px', md: '17px' },
+              fontSize: { xs: '14px', md: '17px' },
               fontWeight: 400,
               color: 'grey.main',
               fontStyle: 'italic',
@@ -121,7 +121,7 @@ const OrderDetails = ({ length, total, deliveryPrice, subtotal }) => {
           </Typography>
           <Typography
             sx={{
-              fontSize: { xs: '13px', md: '17px' },
+              fontSize: { xs: '14px', md: '17px' },
               fontWeight: 400,
               color: 'grey.main',
               fontStyle: 'italic',
@@ -139,7 +139,7 @@ const OrderDetails = ({ length, total, deliveryPrice, subtotal }) => {
         >
           <Typography
             sx={{
-              fontSize: { xs: '13px', md: '17px' },
+              fontSize: { xs: '14px', md: '17px' },
               fontWeight: 400,
               color: 'grey.main',
               fontStyle: 'italic',
@@ -149,7 +149,7 @@ const OrderDetails = ({ length, total, deliveryPrice, subtotal }) => {
           </Typography>
           <Typography
             sx={{
-              fontSize: { xs: '13px', md: '17px' },
+              fontSize: { xs: '14px', md: '17px' },
               fontWeight: 400,
               color: 'grey.main',
               fontStyle: 'italic',
@@ -172,7 +172,7 @@ const OrderDetails = ({ length, total, deliveryPrice, subtotal }) => {
           <Typography
             sx={{
               fontWeight: 700,
-              fontSize: { xs: '13px', md: '18px' },
+              fontSize: { xs: '14px', md: '18px' },
               color: 'text.primary',
             }}
           >
@@ -181,7 +181,7 @@ const OrderDetails = ({ length, total, deliveryPrice, subtotal }) => {
           <Typography
             sx={{
               fontWeight: 700,
-              fontSize: { xs: '13px', md: '18px' },
+              fontSize: { xs: '14px', md: '18px' },
               color: 'text.primary',
             }}
           >
@@ -198,7 +198,7 @@ const OrderDetails = ({ length, total, deliveryPrice, subtotal }) => {
           <Typography
             sx={{
               fontWeight: 400,
-              fontSize: { xs: '13px', md: '18px' },
+              fontSize: { xs: '14px', md: '18px' },
               color: 'btn.main',
               fontStyle: 'italic',
             }}
@@ -208,7 +208,7 @@ const OrderDetails = ({ length, total, deliveryPrice, subtotal }) => {
           <Typography
             sx={{
               fontWeight: 400,
-              fontSize: { xs: '13px', md: '18px' },
+              fontSize: { xs: '14px', md: '18px' },
               color: 'btn.main',
               fontStyle: 'italic',
             }}
