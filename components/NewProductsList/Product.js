@@ -1,21 +1,30 @@
 import { Button } from '@mui/material'
 import { Box } from '@mui/system'
-import Link from 'components/Link'
 import NewSetQuantity from 'components/NewSetQuantity'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
+import WishlistIcon from 'public/icons/WishlistIcon'
+import WishlistIconFilled from 'public/icons/WishlistIconFilled'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart, removeFromCart } from 'redux/actions/cart'
+import { addToWishlist, removeFromWishlist } from 'redux/actions/wishlist'
 import { formatPrice } from 'utility/formatPrice'
 import { getDiscount } from 'utility/getDiscount'
 
 const Product = ({ product }) => {
+  const router = useRouter()
   const dispatch = useDispatch()
   const cart = useSelector((state) => state.cart)
+  const wishlist = useSelector((state) => state.wishlist)
   const [quantity, setQuantity] = useState(1)
 
   const alreadyAddedToCart = !!cart.find(
     (item) => item.selectedId === product.databaseId
+  )
+
+  const alreadyAddedToWishlist = !!wishlist.find(
+    (item) => item.databaseId === product.databaseId
   )
 
   const quantityInCart = cart.find(
@@ -43,9 +52,14 @@ const Product = ({ product }) => {
         },
       }}
     >
-      <Link
-        href={`/product/${product.slug}`}
-        sx={{ display: 'flex', height: '100%', flexDirection: 'column' }}
+      <Box
+        onClick={() => router.push(`/product/${product.slug}`)}
+        sx={{
+          display: 'flex',
+          height: '100%',
+          flexDirection: 'column',
+          cursor: 'pointer',
+        }}
       >
         <Box
           position='relative'
@@ -77,6 +91,27 @@ const Product = ({ product }) => {
               {getDiscount(product?.woocsRegularPrice, product?.woocsSalePrice)}
             </Box>
           )}
+          <Box
+            position='absolute'
+            top={10}
+            right={10}
+            display='flex'
+            alignItems='center'
+            justifyContent='center'
+            sx={{
+              cursor: 'pointer',
+            }}
+            onClick={(e) => {
+              e.stopPropagation()
+              if (alreadyAddedToWishlist) {
+                dispatch(removeFromWishlist(product?.databaseId))
+              } else {
+                dispatch(addToWishlist(product))
+              }
+            }}
+          >
+            {alreadyAddedToWishlist ? <WishlistIconFilled /> : <WishlistIcon />}
+          </Box>
         </Box>
         <Box
           sx={{
@@ -122,7 +157,7 @@ const Product = ({ product }) => {
               : product?.woocsRegularPrice
           )}
         </Box>
-      </Link>
+      </Box>
       <Box display='flex' alignItems='center'>
         <NewSetQuantity
           quantity={quantity}

@@ -41,6 +41,7 @@ const Header = ({ categories }) => {
   })
 
   const cart = useSelector((state) => state.cart)
+  const wishlist = useSelector((state) => state.wishlist)
 
   useEffect(() => {
     if (open) {
@@ -107,9 +108,11 @@ const Header = ({ categories }) => {
                 <LoginMobile />
               </IconButton>
             </Link>
-            <Link href='/'>
+            <Link href='/wishlist'>
               <IconButton sx={{ marginLeft: '10px' }} disableRipple>
-                <WishlistMobile />
+                <Badge badgeContent={wishlist.length} color='primary'>
+                  <WishlistMobile />
+                </Badge>
               </IconButton>
             </Link>
             <Link href='/cart'>
@@ -158,7 +161,7 @@ const Header = ({ categories }) => {
                 padding: { xs: '0', lg: 'unset' },
                 justifyContent: 'center',
                 alignItems: 'center',
-                minHeight: { xs: '35px', lg: '55px' },
+                minHeight: { xs: 35, lg: 58 },
                 borderRadius: '8px',
                 boxShadow: 'none',
                 marginLeft: { xs: '0', lg: '15px' },
@@ -313,12 +316,14 @@ const Header = ({ categories }) => {
                 <Login />
               </IconButton>
             </Link>
-            <Link href='/'>
+            <Link href='/wishlist'>
               <IconButton
                 sx={{ marginLeft: '10px', boxShadow: 'none' }}
                 disableRipple
               >
-                <Wishlist />
+                <Badge badgeContent={wishlist.length} color='primary'>
+                  <Wishlist />
+                </Badge>
               </IconButton>
             </Link>
             <Link href='/cart'>

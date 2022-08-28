@@ -10,16 +10,27 @@ import NewProductsList from 'components/NewProductsList'
 import NewSetQuantity from 'components/NewSetQuantity'
 import 'react-image-gallery/styles/css/image-gallery.css'
 import { addToCart, removeFromCart } from 'redux/actions/cart'
+import Link from 'components/Link'
+import WishlistIconFilled from 'public/icons/WishlistIconFilled'
+import WishlistIcon from 'public/icons/WishlistIcon'
+import { addToWishlist, removeFromWishlist } from 'redux/actions/wishlist'
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch()
   const mobile = useMediaQuery((theme) => theme.breakpoints.down('lg'))
   const cart = useSelector((state) => state.cart)
+  const wishlist = useSelector((state) => state.wishlist)
   const [quantity, setQuantity] = useState(1)
 
   const alreadyAddedToCart = !!cart.find(
     (item) => item.selectedId === product.databaseId
   )
+
+  const alreadyAddedToWishlist = !!wishlist.find(
+    (item) => item.databaseId === product.databaseId
+  )
+
+  const productBrand = product?.paBrands?.nodes[0]
 
   const images = [
     {
@@ -112,6 +123,19 @@ const ProductCard = ({ product }) => {
             showFullscreenButton={false}
             autoPlay={false}
           />
+          {productBrand && (
+            <Link
+              href={`/catalog/all/?brand=${JSON.stringify(productBrand)}`}
+              ml={{ xs: 0, lg: 13.75 }}
+              mt={2}
+              display='block'
+            >
+              Вся продукция бренда:{' '}
+              <Box component='span' color='#1F3A8F' fontWeight='bold'>
+                {productBrand?.name}
+              </Box>
+            </Link>
+          )}
         </Box>
         <Box
           sx={{
@@ -168,7 +192,6 @@ const ProductCard = ({ product }) => {
               mr={{ xs: 1, lg: 1.5 }}
             />
             <Button
-              fullWidth
               color={alreadyAddedToCart ? 'secondary' : 'primary'}
               onClick={
                 alreadyAddedToCart
@@ -182,10 +205,38 @@ const ProductCard = ({ product }) => {
                 color: 'common.white',
                 py: 1.5,
                 px: 3.5,
+                width: { xs: '100%', lg: 'auto' },
               }}
             >
               {alreadyAddedToCart ? 'В КОРЗИНЕ' : 'ДОБАВИТЬ В КОРЗИНУ'}
             </Button>
+            <Box
+              display='flex'
+              alignItems='center'
+              justifyContent='center'
+              sx={{
+                cursor: 'pointer',
+                ml: 2,
+                svg: {
+                  width: 25,
+                  height: 25,
+                },
+              }}
+              onClick={(e) => {
+                e.stopPropagation()
+                if (alreadyAddedToWishlist) {
+                  dispatch(removeFromWishlist(product?.databaseId))
+                } else {
+                  dispatch(addToWishlist(product))
+                }
+              }}
+            >
+              {alreadyAddedToWishlist ? (
+                <WishlistIconFilled />
+              ) : (
+                <WishlistIcon />
+              )}
+            </Box>
           </Box>
           <ProductCardAccordion />
         </Box>

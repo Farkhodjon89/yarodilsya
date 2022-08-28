@@ -61,6 +61,7 @@ export default function Catalog({ categories, category, initialData }) {
   const router = useRouter()
   const onSale = !!router?.query?.onSale
   const onSearch = router?.query?.search
+  const onBrand = router?.query?.brand
   const firstRender = useFirstRender()
   const [openMobileFilter, setOpenMobileFilter] = useState(false)
   const [filters, setFilters] = useState([])
@@ -68,7 +69,7 @@ export default function Catalog({ categories, category, initialData }) {
   const [sizeTerms, setSizeTerms] = useState([])
   const [brandTerms, setBrandTerms] = useState([])
   const [sortBy, setSortBy] = useState('')
-  const [val, setVal] = useState({ min: 0, max: 1000000 })
+  const [val, setVal] = useState({ min: 0, max: 10000000 })
   const [data, setData] = useState({
     products: initialData?.nodes || [],
     endCursor: initialData?.pageInfo?.endCursor,
@@ -240,6 +241,14 @@ export default function Catalog({ categories, category, initialData }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onSearch])
 
+  useEffect(() => {
+    if (onBrand) {
+      setBrandTerms((prevData) => [...prevData, JSON.parse(onBrand)])
+      customLoadData()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onBrand])
+
   const sortByItems = [
     {
       value: 'new',
@@ -258,8 +267,6 @@ export default function Catalog({ categories, category, initialData }) {
       name: 'Скидкам',
     },
   ]
-
-  console.log('val', val)
 
   return (
     <Layout categories={categories}>

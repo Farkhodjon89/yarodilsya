@@ -51,7 +51,7 @@ const Home = ({ categories, products, discountedProducts }) => {
         mt={1}
       >
         <Box
-          width={{ xs: '100%', lg: 'calc(100% - 300px)' }}
+          width={{ xs: '100%', lg: 'calc(100% - 270px)' }}
           mt={{ xs: 0, lg: 2.5 }}
         >
           <ItemsSlider slidesToShow={1} dots>
@@ -79,7 +79,7 @@ const Home = ({ categories, products, discountedProducts }) => {
           </ItemsSlider>
         </Box>
         <Box
-          width={{ xs: '100%', lg: 244 }}
+          width={{ xs: '100%', lg: 200 }}
           ml={{ xs: 0, lg: 3.5 }}
           mt={{ xs: 4, lg: 0 }}
         >

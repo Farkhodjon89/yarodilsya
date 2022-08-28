@@ -17,6 +17,13 @@ export const PRODUCT = gql`
           sourceUrl
         }
       }
+      paBrands {
+        nodes {
+          name
+          databaseId
+          slug
+        }
+      }
       productCategories(where: { orderby: TERM_GROUP }) {
         nodes {
           name

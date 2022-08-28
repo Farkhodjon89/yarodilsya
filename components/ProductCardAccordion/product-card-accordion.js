@@ -9,6 +9,7 @@ import {
 } from '@mui/material'
 import ArrowDown from '../../public/icons/arrowDown'
 import DeliveryIcon from '../../public/icons/DeliveryIcon'
+import Wallet from 'public/icons/Wallet'
 
 const ProductCardAccordion = () => {
   return (
@@ -116,7 +117,7 @@ const ProductCardAccordion = () => {
           }}
         >
           <IconButton aria-label='delivery'>
-            <DeliveryIcon />
+            <Wallet />
           </IconButton>
           <Typography
             sx={{ fontWeight: 600, fontSize: '16px', color: 'text.primary' }}
