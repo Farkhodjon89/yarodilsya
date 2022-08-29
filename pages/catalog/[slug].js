@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Layout from '/components/Layout/layout'
 import { Box, Button, Grid, Skeleton } from '@mui/material'
 import { client } from 'apollo-client'
@@ -20,9 +20,18 @@ import Filter from 'public/icons/Filter'
 
 const first = 8
 
-const ButtonComponent = ({ key, action, name }) => (
+const initialState = {
+  products: [],
+  endCursor: '',
+  hasNextPage: false,
+  colors: [],
+  sizes: [],
+  brands: [],
+}
+
+const ButtonComponent = ({ title, action, name }) => (
   <Button
-    key={key}
+    key={title}
     variant='contained'
     endIcon={
       <Box
@@ -58,9 +67,18 @@ const ButtonComponent = ({ key, action, name }) => (
 )
 
 export default function Catalog({ categories, category, initialData }) {
+  const initialStateData = useMemo(
+    () => ({
+      products: initialData?.nodes || [],
+      endCursor: initialData?.pageInfo?.endCursor,
+      hasNextPage: !!initialData?.pageInfo?.hasNextPage,
+      colors: initialData?.activeTerms?.paColors,
+      sizes: initialData?.activeTerms?.paSizes,
+      brands: initialData?.activeTerms?.paBrands,
+    }),
+    [initialData]
+  )
   const router = useRouter()
-  const onSale = !!router?.query?.onSale
-  const onSearch = router?.query?.search
   const onBrand = router?.query?.brand
   const firstRender = useFirstRender()
   const [openMobileFilter, setOpenMobileFilter] = useState(false)
@@ -70,61 +88,23 @@ export default function Catalog({ categories, category, initialData }) {
   const [brandTerms, setBrandTerms] = useState([])
   const [sortBy, setSortBy] = useState('')
   const [val, setVal] = useState({ min: 0, max: 10000000 })
-  const [data, setData] = useState({
-    products: initialData?.nodes || [],
-    endCursor: initialData?.pageInfo?.endCursor,
-    hasNextPage: !!initialData?.pageInfo?.hasNextPage,
-    colors: initialData?.activeTerms?.paColors,
-    sizes: initialData?.activeTerms?.paSizes,
-    brands: initialData?.activeTerms?.paBrands,
+  const [data, setData] = useState(initialStateData)
+
+  const [loadData, { loading }] = useLazyQuery(PRODUCTS, {
+    client,
+    onCompleted: (data) => {
+      setData((prevData) => ({
+        products: [...prevData?.products, ...data?.products?.nodes],
+        endCursor: data?.products?.pageInfo?.endCursor,
+        hasNextPage: data?.products?.pageInfo?.hasNextPage,
+        colors: data?.products?.activeTerms?.paColors,
+        sizes: data?.products?.activeTerms?.paSizes,
+        brands: data?.products?.activeTerms?.paBrands,
+      }))
+    },
   })
 
-  const breadcrumbs = [
-    {
-      databaseId: 'main',
-      name: 'Главная',
-      slug: '/',
-    },
-    ...(category?.parent
-      ? [
-          {
-            databaseId: category?.parent?.node?.databaseId,
-            name: category?.parent?.node?.name,
-            slug: '/catalog/' + category?.parent?.node?.slug,
-          },
-        ]
-      : []),
-
-    {
-      databaseId: category?.databaseId,
-      name: category?.name,
-      slug: '/catalog/' + category?.slug,
-    },
-  ]
-
-  const [loadData, { data: moreData, loading: loadingData }] = useLazyQuery(
-    PRODUCTS,
-    {
-      client,
-      fetchPolicy: 'network-only',
-      notifyOnNetworkStatusChange: true,
-      onCompleted: () => {
-        setData(
-          (oldData) =>
-            oldData && {
-              products: [...oldData?.products, ...moreData?.products?.nodes],
-              endCursor: moreData?.products?.pageInfo?.endCursor,
-              hasNextPage: moreData?.products?.pageInfo?.hasNextPage,
-              colors: moreData?.products?.activeTerms?.paColors,
-              sizes: moreData?.products?.activeTerms?.paSizes,
-              brands: moreData?.products?.activeTerms?.paBrands,
-            }
-        )
-      },
-    }
-  )
-
-  const customLoadData = () =>
+  const customLoadData = (custom) =>
     loadData({
       variables: {
         first,
@@ -132,10 +112,8 @@ export default function Catalog({ categories, category, initialData }) {
           category.slug === 'all'
             ? categories?.data?.productCategories?.nodes.map(({ slug }) => slug)
             : [category.slug],
-        onSale: onSale,
-        after: data?.endCursor || undefined,
+        after: custom === 'custom' ? '' : data?.endCursor,
         filters: filters.length ? filters : undefined,
-        search: onSearch || undefined,
         minPrice: val.min,
         maxPrice: val.max,
         orderBy: sortBy
@@ -178,76 +156,50 @@ export default function Catalog({ categories, category, initialData }) {
           : []),
       ])
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [colorTerms, sizeTerms, brandTerms])
+  }, [colorTerms, sizeTerms, brandTerms, firstRender])
 
   useEffect(() => {
     if (!firstRender) {
-      setData({
-        products: [],
-        endCursor: '',
-        hasNextPage: false,
-        colors: [],
-        sizes: [],
-        brands: [],
-      })
-      customLoadData()
+      setData(initialState)
+      customLoadData('custom')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters])
-
-  useEffect(() => {
-    if (!firstRender) {
-      setData({
-        products: [],
-        endCursor: '',
-        hasNextPage: false,
-        colors: [],
-        sizes: [],
-        brands: [],
-      })
-      customLoadData()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [val])
-
-  useEffect(() => {
-    if (onSale) {
-      setData({
-        products: [],
-        endCursor: '',
-        hasNextPage: false,
-        colors: [],
-        sizes: [],
-        brands: [],
-      })
-      customLoadData()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onSale])
-
-  useEffect(() => {
-    if (onSearch) {
-      setData({
-        products: [],
-        endCursor: '',
-        hasNextPage: false,
-        colors: [],
-        sizes: [],
-        brands: [],
-      })
-      customLoadData()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onSearch])
+  }, [firstRender, filters])
 
   useEffect(() => {
     if (onBrand) {
       setBrandTerms((prevData) => [...prevData, JSON.parse(onBrand)])
-      customLoadData()
+      customLoadData('custom')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onBrand])
+
+  useEffect(() => {
+    setData(initialStateData)
+  }, [initialStateData])
+
+  const breadcrumbs = [
+    {
+      databaseId: 'main',
+      name: 'Главная',
+      slug: '/',
+    },
+    ...(category?.parent
+      ? [
+          {
+            databaseId: category?.parent?.node?.databaseId,
+            name: category?.parent?.node?.name,
+            slug: '/catalog/' + category?.parent?.node?.slug,
+          },
+        ]
+      : []),
+
+    {
+      databaseId: category?.databaseId,
+      name: category?.name,
+      slug: '/catalog/' + category?.slug,
+    },
+  ]
 
   const sortByItems = [
     {
@@ -410,6 +362,7 @@ export default function Catalog({ categories, category, initialData }) {
               {brandTerms.map((brand) => (
                 <ButtonComponent
                   key={brand.databaseId}
+                  title={brand.databaseId}
                   name={brand.name}
                   action={() => addToArray(brand, brandTerms, setBrandTerms)}
                 />
@@ -417,6 +370,7 @@ export default function Catalog({ categories, category, initialData }) {
               {colorTerms.map((color) => (
                 <ButtonComponent
                   key={color.databaseId}
+                  title={color.databaseId}
                   name={color.name}
                   action={() => addToArray(color, colorTerms, setColorTerms)}
                 />
@@ -424,13 +378,14 @@ export default function Catalog({ categories, category, initialData }) {
               {sizeTerms.map((size) => (
                 <ButtonComponent
                   key={size.databaseId}
+                  title={size.databaseId}
                   name={size.name}
                   action={() => addToArray(size, sizeTerms, setSizeTerms)}
                 />
               ))}
             </Box>
           </Box>
-          {loadingData && !data?.products?.length ? (
+          {loading && !data?.products?.length ? (
             <Skeleton />
           ) : data?.products?.length ? (
             <InfiniteScroll
@@ -440,7 +395,7 @@ export default function Catalog({ categories, category, initialData }) {
               initialLoad={false}
             >
               <NewProductsList data={data?.products} />
-              {loadingData && <Skeleton />}
+              {loading && <Skeleton />}
             </InfiniteScroll>
           ) : (
             <Empty title='Товары не найдены' />

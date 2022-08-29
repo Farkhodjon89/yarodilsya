@@ -19,6 +19,12 @@ const ProductCardAccordion = () => {
           backgroundColor: 'transparent',
           boxShadow: 'none',
           borderTop: '1px solid #E8E8E8',
+          '&:before': {
+            display: 'none',
+          },
+          '&:after': {
+            display: 'none',
+          },
         }}
         defaultExpanded
         disableGutters
@@ -31,8 +37,11 @@ const ProductCardAccordion = () => {
             display: 'flex',
             alignItems: 'center',
             p: 0,
+            '& .MuiButtonBase-root': {
+              ml: -2,
+            },
             '& .MuiAccordionSummary-content, .Mui-expanded': {
-              m: 0,
+              // m: 0,
             },
           }}
         >
@@ -59,6 +68,12 @@ const ProductCardAccordion = () => {
           backgroundColor: 'transparent',
           boxShadow: 'none',
           borderTop: '1px solid #E8E8E8',
+          '&:before': {
+            display: 'none',
+          },
+          '&:after': {
+            display: 'none',
+          },
         }}
         defaultExpanded
         disableGutters
@@ -71,8 +86,11 @@ const ProductCardAccordion = () => {
             display: 'flex',
             alignItems: 'center',
             p: 0,
+            '& .MuiButtonBase-root': {
+              ml: -1.5,
+            },
             '& .MuiAccordionSummary-content, .Mui-expanded': {
-              m: 0,
+              // m: 0,
             },
           }}
         >
@@ -99,6 +117,13 @@ const ProductCardAccordion = () => {
           backgroundColor: 'transparent',
           boxShadow: 'none',
           borderTop: '1px solid #E8E8E8',
+          borderBottom: '1px solid #E8E8E8',
+          '&:before': {
+            display: 'none',
+          },
+          '&:after': {
+            display: 'none',
+          },
         }}
         defaultExpanded
         disableGutters
@@ -112,7 +137,7 @@ const ProductCardAccordion = () => {
             alignItems: 'center',
             p: 0,
             '& .MuiAccordionSummary-content, .Mui-expanded': {
-              m: 0,
+              // m: 0,
             },
           }}
         >

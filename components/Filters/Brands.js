@@ -18,6 +18,7 @@ const Brands = ({ brands = [], brandTerms, setBrandTerms }) => {
       setData(brands.slice(0, 4))
     }
   }, [brands, open])
+
   return (
     <Accordion title='Бренды'>
       {data?.map((brand) => (

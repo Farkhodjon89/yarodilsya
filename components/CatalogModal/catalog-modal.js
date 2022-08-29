@@ -81,7 +81,7 @@ const CatalogModal = ({ open, setOpen, mainCategories }) => {
                 key={databaseId}
                 sx={{
                   width: '23%',
-                  marginBottom: '50px',
+                  marginBottom: '25px',
                   flexDirection: 'column',
                   display: 'flex',
                 }}

@@ -75,7 +75,7 @@ const ProductCard = ({ product }) => {
               width: '100%',
             },
             '.image-gallery-slide .image-gallery-image': {
-              objectFit: 'cover !important',
+              objectFit: 'contain !important',
               minHeight: { xs: '340px !important', lg: '580px !important' },
               height: { xs: '340px !important', lg: '580px !important' },
               maxHeight: { xs: '340px !important', lg: '580px !important' },
@@ -252,7 +252,7 @@ const ProductCard = ({ product }) => {
           <Box>
             <SectionTitle title='Характеристики:' />
             <Stack
-              sx={{ maxWidth: '400px', width: '100%' }}
+              sx={{ maxWidth: { xs: '100%', lg: '400px' }, width: '100%' }}
               direction='column'
               spacing={1}
             >
