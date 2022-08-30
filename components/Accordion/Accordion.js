@@ -23,8 +23,6 @@ const Accordion = ({ title = '', children, maxHeight = 300 }) => {
             <ArrowDown />
           </IconButton>
         }
-        aria-controls={title + 'content'}
-        id={title + 'header'}
         sx={{ padding: 0, fontWeight: 600 }}
       >
         <Box>{title}</Box>
@@ -34,6 +32,11 @@ const Accordion = ({ title = '', children, maxHeight = 300 }) => {
           px: 0,
           maxHeight,
           overflowY: 'auto',
+          '-ms-overflow-style': 'none',
+          'scrollbar-width': 'none',
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
         }}
       >
         <Box>{children}</Box>

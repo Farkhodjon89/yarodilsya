@@ -10,9 +10,9 @@ const Breadcrumb = ({ breadcrumbs }) => {
           key={i}
           href={slug}
           sx={{
-            fontSize: 14,
-            lineHeight: '18px',
-            color: '#606060',
+            fontSize: { xs: 11, lg: 14 },
+            lineHeight: { xs: '15px', lg: '18px' },
+            color: '#999999',
           }}
         >
           {name}

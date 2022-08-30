@@ -259,8 +259,7 @@ const CartMain = ({ products = [], remove }) => {
       </Box>
       <Box sx={{ width: { xs: '100%', md: '33%' } }}>
         <Box sx={{ width: '100%' }}>
-          {/* <AccordionPromoCode /> */}
-          <OrderDetails />
+          <OrderDetails cartPage />
         </Box>
         <Button
           fullWidth

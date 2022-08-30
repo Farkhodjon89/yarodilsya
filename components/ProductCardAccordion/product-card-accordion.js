@@ -37,11 +37,12 @@ const ProductCardAccordion = () => {
             display: 'flex',
             alignItems: 'center',
             p: 0,
+
             '& .MuiButtonBase-root': {
               ml: -2,
             },
-            '& .MuiAccordionSummary-content, .Mui-expanded': {
-              // m: 0,
+            '& .MuiAccordionSummary-content': {
+              m: 0,
             },
           }}
         >
@@ -54,7 +55,7 @@ const ProductCardAccordion = () => {
             Доставка по Ташкенту
           </Typography>
         </AccordionSummary>
-        <AccordionDetails sx={{ py: 1, px: 0 }}>
+        <AccordionDetails sx={{ pt: 0, pb: 1, px: 0 }}>
           <Typography
             sx={{ fontWeight: 400, fontSize: '16px', color: 'grey.main' }}
           >
@@ -89,8 +90,8 @@ const ProductCardAccordion = () => {
             '& .MuiButtonBase-root': {
               ml: -1.5,
             },
-            '& .MuiAccordionSummary-content, .Mui-expanded': {
-              // m: 0,
+            '& .MuiAccordionSummary-content': {
+              m: 0,
             },
           }}
         >
@@ -103,7 +104,7 @@ const ProductCardAccordion = () => {
             Доставка по Узбекистану
           </Typography>
         </AccordionSummary>
-        <AccordionDetails sx={{ py: 1, px: 0 }}>
+        <AccordionDetails sx={{ pt: 0, pb: 1, px: 0 }}>
           <Typography
             sx={{ fontWeight: 400, fontSize: '16px', color: 'grey.main' }}
           >
@@ -136,8 +137,8 @@ const ProductCardAccordion = () => {
             display: 'flex',
             alignItems: 'center',
             p: 0,
-            '& .MuiAccordionSummary-content, .Mui-expanded': {
-              // m: 0,
+            '& .MuiAccordionSummary-content': {
+              m: 0,
             },
           }}
         >
@@ -150,7 +151,7 @@ const ProductCardAccordion = () => {
             Оплата
           </Typography>
         </AccordionSummary>
-        <AccordionDetails sx={{ py: 1, px: 0 }}>
+        <AccordionDetails sx={{ pt: 0, pb: 1, px: 0 }}>
           <Typography
             sx={{ fontWeight: 400, fontSize: '16px', color: 'grey.main' }}
           >
