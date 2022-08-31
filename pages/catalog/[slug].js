@@ -80,6 +80,7 @@ export default function Catalog({ categories, category, initialData }) {
   )
   const router = useRouter()
   const onBrand = router?.query?.brand
+  const search = router?.query?.search
   const firstRender = useFirstRender()
   const [openMobileFilter, setOpenMobileFilter] = useState(false)
   const [filters, setFilters] = useState([])
@@ -116,6 +117,7 @@ export default function Catalog({ categories, category, initialData }) {
         filters: filters.length ? filters : undefined,
         minPrice: val.min,
         maxPrice: val.max,
+        search: search,
         orderBy: sortBy
           ? [
               {
@@ -173,6 +175,14 @@ export default function Catalog({ categories, category, initialData }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onBrand])
+
+  useEffect(() => {
+    if (search) {
+      setData(initialState)
+      customLoadData('custom')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search])
 
   useEffect(() => {
     setData(initialStateData)

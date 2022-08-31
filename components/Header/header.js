@@ -8,6 +8,7 @@ import {
   Badge,
   Toolbar,
   Typography,
+  ClickAwayListener,
 } from '@mui/material'
 import Image from 'next/image'
 import Burger from '../../public/icons/Burger'
@@ -30,9 +31,12 @@ import { PRODUCTS } from 'graphql/products'
 import { useLazyQuery } from '@apollo/client'
 import { client } from 'apollo-client'
 import CatalogModalMob from 'components/CatalogModalMob/catalog-modal-mob'
+import { useRouter } from 'next/router'
 
 const Header = ({ categories }) => {
+  const { push } = useRouter()
   const [open, setOpen] = useState(false)
+  const [openSearch, setOpenSearch] = useState(false)
   const mobile = useMediaQuery((theme) => theme.breakpoints.down('lg'))
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState([])
@@ -60,9 +64,9 @@ const Header = ({ categories }) => {
   }, [data, searchQuery.length])
 
   const searchData = (e) => {
+    setOpenSearch(true)
     setSearchResults([])
     setSearchQuery(e.target.value)
-
     if (e.target.value.length) {
       loadProducts({
         variables: {
@@ -72,7 +76,6 @@ const Header = ({ categories }) => {
       })
     }
   }
-
   return (
     <AppBar
       position='sticky'
@@ -209,94 +212,102 @@ const Header = ({ categories }) => {
               setOpen={setOpen}
             />
           )}
-          <Box
-            sx={{
-              position: 'relative',
-              width: '100%',
-              ml: { xs: 1, lg: 3 },
-              mr: { xs: 0, lg: 1 },
-            }}
-          >
+          <ClickAwayListener onClickAway={() => setOpenSearch(false)}>
             <Box
               sx={{
-                input: {
-                  width: '100%',
-                  height: { xs: 35, lg: 58 },
-                  backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                  borderRadius: '8px',
-                  border: 'none',
-                  p: { xs: 1, lg: 2 },
-                  outline: 'none',
-                  fontSize: { xs: 14, lg: 17 },
-                  lineHeight: { xs: '19px', lg: '23px' },
-                  '&::placeholder': {
-                    color: 'rgba(255, 255, 255, 0.8)',
-                  },
-                  '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.4)',
-                  },
-                  '&:focus': {
-                    backgroundColor: 'rgba(255, 255, 255, 1)',
-                  },
-                },
+                position: 'relative',
+                width: '100%',
+                ml: { xs: 1, lg: 3 },
+                mr: { xs: 0, lg: 1 },
               }}
             >
-              <input
-                value={searchQuery}
-                onChange={searchData}
-                placeholder='Поиск нужного товара...'
-              />
-            </Box>
-            <Box
-              sx={{
-                position: 'absolute',
-                top: { xs: 9.5, lg: 19 },
-                right: { xs: 9.5, lg: 19 },
-              }}
-            >
-              {mobile ? <SearchMobile /> : <Search />}
-            </Box>
-            <Box
-              sx={{
-                div: {
+              <Box
+                sx={{
+                  input: {
+                    width: '100%',
+                    height: { xs: 35, lg: 58 },
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    borderRadius: '8px',
+                    border: 'none',
+                    p: { xs: 1, lg: 2 },
+                    outline: 'none',
+                    fontSize: { xs: 14, lg: 17 },
+                    lineHeight: { xs: '19px', lg: '23px' },
+                    '&::placeholder': {
+                      color: 'rgba(255, 255, 255, 0.8)',
+                    },
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 0.4)',
+                    },
+                    '&:focus': {
+                      backgroundColor: 'rgba(255, 255, 255, 1)',
+                    },
+                  },
+                }}
+              >
+                <input
+                  value={searchQuery}
+                  onChange={searchData}
+                  onKeyUp={(e) => {
+                    if (e.key === 'Enter') {
+                      push(`/catalog/all/?search=${e.target.value}`)
+                    }
+                  }}
+                  placeholder='Поиск нужного товара...'
+                />
+              </Box>
+              <Box
+                sx={{
                   position: 'absolute',
-                  top: { xs: 50, lg: 70 },
-                  left: 0,
-                  right: 0,
-                  width: '100%',
-                  height: 'auto',
-                  bgcolor: 'common.white',
-                  boxShadow: '1',
-                  p: 2,
-                  pl: 3,
-                  borderRadius: 1,
-                  color: 'text.primary',
-                },
-              }}
-            >
-              {loading && !searchResults.length ? (
-                <Box>Загрузка...</Box>
-              ) : searchQuery.length && !searchResults.length ? (
-                <Box> Товары не найдены</Box>
-              ) : searchResults.length ? (
-                <Box>
-                  {searchResults.map((item) => (
-                    <Link
-                      key={item.databaseId}
-                      href={`/product/${item.slug}`}
-                      sx={{
-                        display: 'block',
-                        mb: 2,
-                        textDecoration: 'underline',
-                      }}
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
-                </Box>
-              ) : null}
+                  top: { xs: 9.5, lg: 19 },
+                  right: { xs: 9.5, lg: 19 },
+                }}
+              >
+                {mobile ? <SearchMobile /> : <Search />}
+              </Box>
+              <Box
+                sx={{
+                  div: {
+                    position: 'absolute',
+                    top: { xs: 50, lg: 70 },
+                    left: 0,
+                    right: 0,
+                    width: '100%',
+                    height: 'auto',
+                    bgcolor: 'common.white',
+                    boxShadow: '1',
+                    p: 2,
+                    pl: 3,
+                    borderRadius: 1,
+                    color: 'text.primary',
+                  },
+                }}
+              >
+                {openSearch &&
+                  (loading && !searchResults.length ? (
+                    <Box>Загрузка...</Box>
+                  ) : searchQuery.length && !searchResults.length ? (
+                    <Box> Товары не найдены</Box>
+                  ) : searchResults.length ? (
+                    <Box>
+                      {searchResults.map((item) => (
+                        <Link
+                          key={item.databaseId}
+                          href={`/product/${item.slug}`}
+                          sx={{
+                            display: 'block',
+                            mb: 2,
+                            textDecoration: 'underline',
+                          }}
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    </Box>
+                  ) : null)}
+              </Box>
             </Box>
-          </Box>
+          </ClickAwayListener>
 
           <Box
             sx={{
