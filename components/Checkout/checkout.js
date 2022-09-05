@@ -65,6 +65,17 @@ const inputs = [
   },
 ]
 
+const cities = [
+  'Ташкент',
+  'Наманган',
+  'Самарканд',
+  'Андижан',
+  'Нукус',
+  'Фергана',
+  'Бухара',
+  'Коканд',
+]
+
 const CheckoutMain = () => {
   const cart = useSelector((state) => state.cart)
   const purchaseAmount = useSelector((state) => state.purchaseAmount)
@@ -83,11 +94,12 @@ const CheckoutMain = () => {
         ? product.woocsSalePrice
         : product.woocsRegularPrice,
       quantity: product.selectedQuantity,
-      variation_id: product.variations && product.selectedProductId,
+      variation_id: product?.variations?.nodes && product.selectedId,
     })
   }
 
   const sendInfo = async (data) => {
+    console.log('data', data)
     setIsLoading(true)
     const orderData = {
       set_paid: false,
@@ -154,29 +166,61 @@ const CheckoutMain = () => {
             borderRadius: '8px',
           }}
         >
-          {inputs.map((item) => (
-            <TextField
-              key={item.name}
-              name={item.name}
-              label={item.label}
-              variant='outlined'
-              required={item.required}
-              sx={{
-                '& .MuiInputBase-root': {
-                  borderRadius: '8px',
-                },
-                '& .MuiOutlinedInput-notchedOutline': {
-                  boxShadow: '0px 4px 40px rgba(0, 0, 0, 0.1)',
-                  border: '1px solid #E8E8E8',
-                },
-                width: { xs: '100%', lg: '49%' },
-                mb: 2,
-              }}
-              {...register(item.name, {
-                required: item.required,
-              })}
-            />
-          ))}
+          {inputs.map((item) =>
+            item.name === 'city' ? (
+              <TextField
+                key={item.name}
+                name={item.name}
+                label={item.label}
+                variant='outlined'
+                select
+                SelectProps={{
+                  native: true,
+                }}
+                sx={{
+                  '& .MuiInputBase-root': {
+                    borderRadius: '8px',
+                  },
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    boxShadow: '0px 4px 40px rgba(0, 0, 0, 0.1)',
+                    border: '1px solid #E8E8E8',
+                  },
+                  width: { xs: '100%', lg: '49%' },
+                  mb: 2,
+                }}
+                {...register(item.name, {
+                  required: item.required,
+                })}
+              >
+                {cities.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </TextField>
+            ) : (
+              <TextField
+                key={item.name}
+                name={item.name}
+                label={item.label}
+                variant='outlined'
+                sx={{
+                  '& .MuiInputBase-root': {
+                    borderRadius: '8px',
+                  },
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    boxShadow: '0px 4px 40px rgba(0, 0, 0, 0.1)',
+                    border: '1px solid #E8E8E8',
+                  },
+                  width: { xs: '100%', lg: '49%' },
+                  mb: 2,
+                }}
+                {...register(item.name, {
+                  required: item.required,
+                })}
+              />
+            )
+          )}
         </Box>
         <TextareaAutosize
           aria-label='textarea'
@@ -220,7 +264,7 @@ const CheckoutMain = () => {
 
       <Box sx={{ width: { xs: '100%', md: '30%' } }}>
         <Box>
-          <OrderDetails />
+          <OrderDetails checkout />
         </Box>
       </Box>
     </Box>

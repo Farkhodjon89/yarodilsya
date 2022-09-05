@@ -20,14 +20,19 @@ const ProductCard = ({ product }) => {
   const mobile = useMediaQuery((theme) => theme.breakpoints.down('lg'))
   const cart = useSelector((state) => state.cart)
   const wishlist = useSelector((state) => state.wishlist)
+  const [databaseId, setDatabaseId] = useState(
+    product?.variations?.nodes
+      ? product?.variations?.nodes[0]?.databaseId
+      : product.databaseId
+  )
   const [quantity, setQuantity] = useState(1)
 
   const alreadyAddedToCart = !!cart.find(
-    (item) => item.selectedId === product.databaseId
+    (item) => item.selectedId === databaseId
   )
 
   const alreadyAddedToWishlist = !!wishlist.find(
-    (item) => item.databaseId === product.databaseId
+    (item) => item.databaseId === databaseId
   )
 
   const productBrand = product?.paBrands?.nodes[0]
@@ -44,7 +49,7 @@ const ProductCard = ({ product }) => {
   ]
 
   const quantityInCart = cart.find(
-    (item) => item.selectedId === product.databaseId
+    (item) => item.selectedId === databaseId
   )?.selectedQuantity
 
   useEffect(() => {
@@ -52,6 +57,15 @@ const ProductCard = ({ product }) => {
       setQuantity(quantityInCart)
     }
   }, [quantityInCart])
+
+  const maxQuantity = product?.variations?.nodes
+    ? product?.variations?.nodes?.find((item) => item.databaseId === databaseId)
+        .stockQuantity
+    : product.stockQuantity
+
+  const simplesize = product?.attributes?.nodes?.find(
+    (item) => item.name === 'Размер' || item.name === 'Объем'
+  )?.options[0]
 
   return (
     <Box>
@@ -183,23 +197,68 @@ const ProductCard = ({ product }) => {
           >
             Артикул: {product.sku}
           </Typography>
-          <Box display='flex' alignItems='center' my={2.5}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              mt: 2,
+              div: {
+                background: '#FFFFFF',
+                border: '1px solid #E8E8E8',
+                borderRadius: '8px',
+                py: 1,
+                px: 2,
+                mr: 1,
+                mb: 1,
+                fontWeight: 400,
+                fontSize: 16,
+                lineHeight: '22px',
+                color: '#606060',
+                cursor: 'pointer',
+                '&:hover': {
+                  border: '1px solid #EA56AE',
+                },
+              },
+            }}
+          >
+            {product?.variations?.nodes
+              ? product?.variations?.nodes?.map((item) => (
+                  <Box
+                    key={item.databaseId}
+                    onClick={() => setDatabaseId(item.databaseId)}
+                    {...(databaseId === item.databaseId && {
+                      bgcolor: '#EA56AE !important',
+                      color: '#FFFFFF !important',
+                      border: '1px solid #EA56AE !important',
+                    })}
+                  >
+                    {item?.size?.nodes[0]?.value}
+                  </Box>
+                ))
+              : simplesize && (
+                  <Box
+                    bgcolor='#EA56AE !important'
+                    color='#FFFFFF !important'
+                    border='1px solid #EA56AE !important'
+                  >
+                    {simplesize}
+                  </Box>
+                )}
+          </Box>
+          <Box display='flex' alignItems='center' mt={1.5} mb={2.5}>
             <NewSetQuantity
               quantity={quantity}
               setQuantity={setQuantity}
-              max={product?.stockQuantity}
-              id={product?.databaseId}
+              max={maxQuantity}
+              id={databaseId}
               mr={{ xs: 1, lg: 1.5 }}
             />
             <Button
               color={alreadyAddedToCart ? 'secondary' : 'primary'}
               onClick={
                 alreadyAddedToCart
-                  ? () => dispatch(removeFromCart(product?.databaseId))
-                  : () =>
-                      dispatch(
-                        addToCart(product, product?.databaseId, quantity)
-                      )
+                  ? () => dispatch(removeFromCart(databaseId))
+                  : () => dispatch(addToCart(product, databaseId, quantity))
               }
               sx={{
                 color: 'common.white',
@@ -225,7 +284,7 @@ const ProductCard = ({ product }) => {
               onClick={(e) => {
                 e.stopPropagation()
                 if (alreadyAddedToWishlist) {
-                  dispatch(removeFromWishlist(product?.databaseId))
+                  dispatch(removeFromWishlist(databaseId))
                 } else {
                   dispatch(addToWishlist(product))
                 }

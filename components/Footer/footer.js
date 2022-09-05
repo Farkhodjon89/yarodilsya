@@ -1,6 +1,8 @@
 import { Box, Container } from '@mui/material'
+import Accordion from 'components/Accordion/Accordion'
 import Link from 'components/Link'
 import Image from 'next/image'
+import { Fragment } from 'react'
 
 const data = [
   {
@@ -87,7 +89,8 @@ const Footer = () => (
       <Box
         display={{ xs: 'block', lg: 'flex' }}
         justifyContent='space-between'
-        py={3.5}
+        pt={{ xs: 1, lg: 3.5 }}
+        pb={3.5}
       >
         <Box width='20%' display={{ xs: 'none', lg: 'block' }}>
           <Box position='relative' width={115} height={123}>
@@ -99,43 +102,78 @@ const Footer = () => (
           </Box>
         </Box>
         {data.map((item, i) => (
-          <Box key={i} width={{ xs: '100%', lg: '20%' }}>
-            <Box
-              sx={{
-                color: 'common.white',
-                fontWeight: 600,
-                fontSize: 18,
-                lineHeight: '25px',
-                mb: 3,
-              }}
-            >
-              {item.title}
-            </Box>
-            {item.children.map((item, i) => (
-              <Link
-                key={i}
-                href={item.slug}
+          <Fragment key={i}>
+            <Box width='20%' display={{ xs: 'none', lg: 'block' }}>
+              <Box
                 sx={{
-                  display: 'block',
-                  color: 'rgba(255, 255, 255, 0.8)',
-                  mb: 1,
+                  color: 'common.white',
+                  fontWeight: 600,
+                  fontSize: 18,
+                  lineHeight: '25px',
+                  mb: 3,
                 }}
               >
-                {item.name}
-              </Link>
-            ))}
-          </Box>
+                {item.title}
+              </Box>
+              {item.children.map((item, i) => (
+                <Link
+                  key={i}
+                  href={item.slug}
+                  sx={{
+                    display: 'block',
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    mb: 1,
+                  }}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </Box>
+            <Box
+              display={{
+                xs: 'block',
+                lg: 'none',
+              }}
+              sx={{
+                '& .MuiAccordion-root': {
+                  backgroundColor: 'transparent',
+                  color: 'white !important',
+                  borderBottom: '1px solid rgba(232, 232, 232, 0.3)',
+                },
+                path: {
+                  fill: 'white',
+                },
+              }}
+            >
+              <Accordion title={item.title} defaultExpanded={false}>
+                {item.children.map((item, i) => (
+                  <Link
+                    key={i}
+                    href={item.slug}
+                    sx={{
+                      display: 'block',
+                      color: 'rgba(255, 255, 255, 0.8)',
+                      mb: 1,
+                    }}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </Accordion>
+            </Box>
+          </Fragment>
         ))}
       </Box>
     </Container>
     <Box
       sx={{
-        borderTop: '1px solid rgba(255, 255, 255, 0.5)',
+        borderTop: { xs: 'none', lg: '1px solid rgba(255, 255, 255, 0.5)' },
       }}
     >
       <Container>
         <Box
-          py={3.5}
+          pt={{ xs: 0, lg: 3.5 }}
+          pb={3.5}
           textAlign={{ xs: 'start', lg: 'center' }}
           color='rgba(255, 255, 255, 0.8)'
         >

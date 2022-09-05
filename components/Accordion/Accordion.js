@@ -7,10 +7,15 @@ import {
 } from '@mui/material'
 import ArrowDown from 'public/icons/ArrowDown'
 
-const Accordion = ({ title = '', children, maxHeight = 300 }) => {
+const Accordion = ({
+  title = '',
+  children,
+  maxHeight = 300,
+  defaultExpanded = true,
+}) => {
   return (
     <MuiAccordion
-      defaultExpanded
+      defaultExpanded={defaultExpanded}
       disableGutters
       square
       sx={{
@@ -32,8 +37,8 @@ const Accordion = ({ title = '', children, maxHeight = 300 }) => {
           px: 0,
           maxHeight,
           overflowY: 'auto',
-          '-ms-overflow-style': 'none',
-          'scrollbar-width': 'none',
+          msOverflowStyle: 'none',
+          scrollbarWidth: 'none',
           '&::-webkit-scrollbar': {
             display: 'none',
           },

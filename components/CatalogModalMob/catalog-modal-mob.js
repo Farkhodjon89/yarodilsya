@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { Box } from '@mui/material'
 import Link from 'components/Link'
 import Arrow from 'public/icons/Arrow'
+import Accordion from 'components/Accordion/Accordion'
 
 const CatalogModalMob = ({ open, categories }) => {
   const [active, setActive] = useState([])
-
   return (
     <>
       <Box
@@ -67,21 +67,45 @@ const CatalogModalMob = ({ open, categories }) => {
           color='text.primary'
           sx={{ svg: { transform: 'rotate(180deg)', mr: 1 } }}
           mb={2}
+          fontWeight='bold'
           onClick={() => setActive([])}
         >
           <Arrow /> Назад
         </Box>
-        {active.map((item) => (
-          <Link
-            key={item.databaseId}
-            display='flex'
-            href={`/catalog/${item.slug}`}
-            alignItems='center'
-            justifyContent='space-between'
-          >
-            {item.name}
-          </Link>
-        ))}
+
+        <Box
+          sx={{
+            pl: 2,
+            '& .MuiAccordion-root': {
+              backgroundColor: 'transparent',
+            },
+            '& .MuiAccordionSummary-content': {
+              color: '#1F3A8F',
+              fontWeight: 400,
+              fontSize: 14,
+              lineHeight: '19px',
+            },
+          }}
+        >
+          {active.map((item) => (
+            <Accordion
+              key={item.databaseId}
+              title={item.name}
+              defaultExpanded={false}
+              maxHeight='auto'
+            >
+              {item?.children?.nodes?.map((item, i) => (
+                <Link
+                  key={item.databaseId}
+                  href={`/catalog/${item.slug}`}
+                  sx={{ display: 'block', mb: 2, ml: 2 }}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </Accordion>
+          ))}
+        </Box>
       </Box>
     </>
   )

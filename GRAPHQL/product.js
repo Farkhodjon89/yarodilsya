@@ -35,6 +35,12 @@ export const PRODUCT = gql`
         woocsRegularPrice
         woocsSalePrice
         stockQuantity
+        attributes {
+          nodes {
+            name
+            options
+          }
+        }
       }
       ... on VariableProduct {
         woocsRegularPrice
@@ -42,6 +48,13 @@ export const PRODUCT = gql`
         variations(where: { stockStatus: IN_STOCK }) {
           nodes {
             databaseId
+            stockQuantity
+            size: attributes(where: { taxonomy: "pa_size" }) {
+              nodes {
+                name
+                value
+              }
+            }
           }
         }
       }
@@ -57,6 +70,12 @@ export const PRODUCT = gql`
           ... on SimpleProduct {
             woocsRegularPrice
             woocsSalePrice
+            attributes {
+              nodes {
+                name
+                options
+              }
+            }
           }
           ... on VariableProduct {
             woocsRegularPrice
@@ -64,6 +83,13 @@ export const PRODUCT = gql`
             variations(where: { stockStatus: IN_STOCK }) {
               nodes {
                 databaseId
+                stockQuantity
+                size: attributes(where: { taxonomy: "pa_size" }) {
+                  nodes {
+                    name
+                    value
+                  }
+                }
               }
             }
           }

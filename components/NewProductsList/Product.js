@@ -19,16 +19,18 @@ const Product = ({ product }) => {
   const wishlist = useSelector((state) => state.wishlist)
   const [quantity, setQuantity] = useState(1)
 
-  const alreadyAddedToCart = !!cart.find(
-    (item) => item.selectedId === product.databaseId
-  )
+  const id = product?.variations?.nodes
+    ? product?.variations?.nodes[0]?.databaseId
+    : product.databaseId
+
+  const alreadyAddedToCart = !!cart.find((item) => item.selectedId === id)
 
   const alreadyAddedToWishlist = !!wishlist.find(
-    (item) => item.databaseId === product.databaseId
+    (item) => item.databaseId === id
   )
 
   const quantityInCart = cart.find(
-    (item) => item.selectedId === product.databaseId
+    (item) => item.selectedId === id
   )?.selectedQuantity
 
   useEffect(() => {
@@ -37,8 +39,13 @@ const Product = ({ product }) => {
     }
   }, [quantityInCart])
 
+  const maxQuantity = product?.variations?.nodes
+    ? product?.variations?.nodes[0]?.stockQuantity
+    : product.stockQuantity
+
   return (
     <Box
+      key={id}
       sx={{
         display: 'flex',
         width: '100%',
@@ -104,7 +111,7 @@ const Product = ({ product }) => {
             onClick={(e) => {
               e.stopPropagation()
               if (alreadyAddedToWishlist) {
-                dispatch(removeFromWishlist(product?.databaseId))
+                dispatch(removeFromWishlist(id))
               } else {
                 dispatch(addToWishlist(product))
               }
@@ -162,8 +169,8 @@ const Product = ({ product }) => {
         <NewSetQuantity
           quantity={quantity}
           setQuantity={setQuantity}
-          max={product?.stockQuantity}
-          id={product?.databaseId}
+          max={maxQuantity}
+          id={id}
           mr={{ xs: 1, lg: 1.5 }}
         />
         <Button
@@ -171,9 +178,8 @@ const Product = ({ product }) => {
           color={alreadyAddedToCart ? 'secondary' : 'primary'}
           onClick={
             alreadyAddedToCart
-              ? () => dispatch(removeFromCart(product?.databaseId))
-              : () =>
-                  dispatch(addToCart(product, product?.databaseId, quantity))
+              ? () => dispatch(removeFromCart(id))
+              : () => dispatch(addToCart(product, id, quantity))
           }
           sx={{
             color: 'common.white',
