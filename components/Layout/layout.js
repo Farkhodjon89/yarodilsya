@@ -9,6 +9,7 @@ import { purchaseAmount } from 'redux/actions/purchaseAmount'
 const Layout = ({ children, categories }) => {
   const dispatch = useDispatch()
   const cart = useSelector((state) => state.cart)
+
   useEffect(() => {
     dispatch(purchaseAmount(cart))
   }, [cart, dispatch])
